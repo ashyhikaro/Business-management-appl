@@ -1,0 +1,107 @@
+.error_message {
+    color: brown !important; 
+    font-size: 14px !important;
+    margin-top: 5px !important;
+    margin-bottom: 0 !important;
+}
+
+button {
+    cursor: pointer;
+}
+
+.field {
+    margin-bottom: 15px;
+
+    input {
+        margin-top: 8px;
+        width: 100% !important;
+        padding: 6px 0 6px 8px;
+        border: none;
+        font-size: 16px;
+    }
+
+    label {
+        font-size: 18px;
+        color: rgb(80, 80, 80);
+    }
+
+    p {
+        margin-top: 5px;
+        font-size: 16px;
+        color: rgb(80, 80, 80);
+    }
+
+    select {
+        margin-top: 8px;
+        width: 100%;
+        width: 100%;
+        padding: 6px 8px 6px 8px;
+        border: none;
+        font-size: 16px;
+        appearance: none;
+    }
+}
+
+.form_block {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+
+    form {
+        background-color: rgb(241, 240, 240);
+        padding: 20px 15px 20px 15px;
+        border-radius: 15px;
+        -webkit-box-shadow: 0px 0px 33px 0px rgba(0,0,0,0.25);
+        -moz-box-shadow: 0px 0px 33px 0px rgba(0,0,0,0.25);
+        box-shadow: 0px 0px 33px 0px rgba(0,0,0,0.25);
+
+        .btns_field {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 0;
+            padding-right: 15px;
+
+            .sign_btn, .submit_btn, .cancel_btn {
+                width: 40%;
+                height: 35px;
+                font-size: 14px;
+                color: white;
+                border: none;
+                border-radius: 15px;
+            }
+        }
+    }
+
+}
+
+h1 {
+    margin-bottom: 30px;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding-right: 15px;
+}
+
+.google_btn {
+    border: none;
+    background-color: transparent;
+}
+
+.sign-in_btn, .submit_btn {
+    background-color: rgb(98, 223, 98);
+}
+
+.sign-up_btn {
+    background-color: rgb(235, 64, 64);
+}
+
+.non_active_btn, .cancel_btn {
+    background-color: rgb(136, 136, 136);
+}
+
+.non_active {
+    display: none;
+}

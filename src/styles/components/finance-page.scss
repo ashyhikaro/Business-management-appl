@@ -1,0 +1,290 @@
+.finance_page {
+    .title {
+        border: none !important;
+        padding-bottom: 0 !important;
+    }
+    
+    .finance_header {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgb(154, 154, 154);
+
+        .header_switcher {
+            display: flex;
+            gap: 10px;
+
+            h3 {
+                cursor: pointer;
+                border-radius: 5px;
+                padding: 8px 12px;
+                transition: 0.3s;
+                color: rgb(154, 154, 154);
+            }
+    
+            h3:hover {
+                opacity: 0.3;
+            }
+    
+            .active {
+                color: white;
+                background-color: rgb(65, 90, 254);
+            }
+        }
+
+        .header_amounts {
+            margin: auto 0;
+            font-size: 20px;
+        }
+    }
+}
+
+.add_finance_btn {
+    color: rgb(98, 223, 98);
+    border: 2px solid rgb(98, 223, 98);
+    border-radius: 100%;
+    padding: 2px 5.5px;
+    font-size: 16px;
+    margin: auto 0;
+    height: 30px;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+.add_finance_btn:hover {
+    opacity: 0.6;
+}
+
+.break_text {
+    word-wrap: break-word;
+}
+
+.incomeValue {
+    color: rgb(35, 102, 35);
+}
+
+.costValue {
+    color: rgb(158, 37, 37);
+}
+
+.finance_main {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    width: 100%;
+
+    .finance_table_container {
+        width: 70%;
+
+        .table {
+            width: 100%;
+
+            .table_titles {
+                display: flex;
+                border-bottom: 1px solid rgb(154, 154, 154);
+
+                .table_title {
+                    display: flex;
+                    align-items: center;
+                    height: 60px;
+                    width: 20%;
+                    font-size: 18px;
+                    color: rgb(104, 104, 104);
+                }
+            }
+
+            .table_rows {
+                .table_row {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    border-bottom: 1px solid rgb(154, 154, 154);
+                    padding: 20px 0 20px 0;
+
+                    .table_col:first-of-type {
+                        text-align: left;
+                    }
+
+                    .table_col {
+                        width: 20%;
+                        text-align: left;
+
+                        .date {
+                            font-size: 18px;
+                        }
+
+                        .date_of_creation {
+                            font-size: 14px;
+                            margin-top: 2px;
+                            color: rgb(104, 104, 104);
+                        }
+
+                        .value {
+                            font-size: 18px;
+                            max-width: 40%;
+                        }
+
+                        .value_currency {
+                            position: absolute;
+                            right: 30%;
+                            top: 10%;
+                            font-size: 14px;
+                        }
+
+                        .project {
+                            max-width: 80%;
+                        }
+
+                        .btn {
+                            border-radius: 5px;
+                            width: 50%;
+                            font-size: 14px;
+                            padding: 6px 6px;
+                            margin-bottom: 5px;
+                            border: none;
+                            color: white;
+                        }
+
+                        .btn:hover {
+                            cursor: pointer;
+                            opacity: 0.6;
+                        }
+
+                        .receipt_btn {
+                            background-color: rgb(65, 90, 254);
+                        }
+
+                        .delete_btn {
+                            background-color: rgb(177, 49, 49);
+                        }
+
+                        .edit_btn {
+                            background-color: rgb(91, 169, 81);
+                        }
+                    }
+
+                    .item_value {
+                        position: relative;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.sort_panel {
+    width: 25%;
+    height: fit-content;
+    border-radius: 5px;
+    background-color: rgb(213, 213, 213);
+    padding: 15px 20px 10px 20px;
+    text-align: left;
+    margin-top: 20px;
+
+    .sort_con_flex {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+
+        .sort__date_title {
+            width: 15%;
+        }
+
+        .sort__sum_title {
+            width: 15%;
+        }
+
+        .sort_btns {
+            display: flex;
+            justify-content: end;
+            gap: 5px;
+            width: 85%;
+
+            button {
+                width: 45%;
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+
+    div {
+        margin-bottom: 10px;
+
+        h4 {
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        input {
+            border-radius: 5px;
+            margin: 0;
+            margin-top: 8px;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            border: none;
+            color: white;
+            background-color: rgb(65, 90, 254);
+            border-radius: 5px;
+            padding: 3px 8px;
+            transition: 0.3s;
+
+            span {
+                font-size: 20px;
+            }
+        }
+
+        button:hover {
+            opacity: 0.5;
+        }
+
+        .sort__project_search {
+            display: flex;
+            width: 100%;
+            margin-top: 8px;
+
+            input {
+                margin-top: 0;
+                border-radius: 5px 0 0 5px;
+                border: none;
+                width: 80%;
+                font-size: 16px;
+                padding: 5px;
+            }
+
+            button {
+                padding: 2px 5px;
+                border-radius: 0 5px 5px 0;
+                width: 20%;
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+
+    .reset_btn__container {
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: end;
+
+        .reset_btn {
+            background-color: rgb(65, 90, 254);
+            color: white;
+            border-radius: 5px;
+            padding: 5px 12px;
+            transition: 0.3s;
+            border: none;
+            font-size: 16px;
+        }
+    }
+}
+
+.sort_panel_non_active {
+    display: none;
+}

@@ -1,0 +1,113 @@
+.home_page {
+    .home__header {
+        border-bottom: 1px solid rgb(154, 154, 154);
+        padding-bottom: 10px;
+
+        .title {
+            margin-bottom: 5px !important;
+            border: none !important;
+            padding-bottom: 0 !important;
+        }
+
+        .today_date {
+            font-size: 20px;
+        }
+    }
+
+    .home__main {
+        width: 100%;
+        display: flex;
+        gap: 30px;
+
+        .main_finance {
+            border-right: 1px solid rgb(154, 154, 154);
+            padding: 20px 30px 0 0;
+            height: 70vh;
+
+            .finance__container {
+                width: 200px;
+
+                .main_finance__title {
+                    margin-bottom: 10px;
+                    text-align: center;
+                    font-weight: 400;
+                }
+
+                .money_container {
+                    border: 1px solid rgb(154, 154, 154);
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    border-radius: 10px;
+                    text-align: center;
+                    width: 100%;
+
+                    p {
+                        word-break: break-all;
+                    }
+
+                    .container__title {
+                        margin-bottom: 5px;
+                        font-size: 20px;
+                    }
+
+                    .incomeValue {
+                        font-size: 20px;
+                    }
+
+                    .costValue {
+                        font-size: 20px;
+                        
+                    }
+                }
+            }
+        }
+
+        .main_statistic {
+            padding-top: 20px;
+            width: 100%;
+            display: flex;
+
+            .line_chart_finances {
+                width: 70%;
+            }
+
+            .statistic__pies {
+                width: 30%;
+
+                h2 {
+                    margin-bottom: 15px !important;
+                }
+
+                .chart-container {
+                    width: 60%;
+                    margin: auto;
+
+                    h2 {
+                        text-align: center !important;
+                        font-size: 20px !important;
+                        font-weight: 400 !important;
+                        margin-bottom: 15px !important;
+                    }
+
+                    canvas {
+                        margin-top: -50px;
+                        width: 200px !important;
+                        height: 200px !important;
+                    }
+                }
+
+                .chart-container:first-of-type {
+                    margin-bottom: 30px;
+                }
+            }
+        }
+    }
+}
+
+.incomeValue {
+    color: rgb(35, 102, 35);
+}
+
+.costValue {
+    color: rgb(158, 37, 37);
+}

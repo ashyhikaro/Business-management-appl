@@ -1,0 +1,34 @@
+.pagination_list {
+    display: flex;
+    width: fit-content;
+    margin: auto;
+    margin-top: 20px;
+    max-width: 100%;
+    border-radius: 20px;
+    background-color: rgb(136, 136, 136);
+    font-weight: bold;
+
+    li {
+        padding: 5px 10px;
+        border-right: 1px solid white;
+        border-left: 1px solid white;
+        color: white;
+    }
+
+    li:hover {
+        cursor: pointer;
+        opacity: 0.3;
+    }
+
+    .selected {
+        background-color: rgb(98, 223, 98);
+    }
+
+    .previous {
+        border-left: 0;
+    }
+
+    .next {
+        border-right: 0;
+    }
+}

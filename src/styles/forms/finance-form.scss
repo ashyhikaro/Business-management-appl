@@ -1,0 +1,51 @@
+.finance__form {
+    background-color: rgb(213, 213, 213);
+    width: 25%;
+    height: 50%;
+    margin-top: 20px;
+    border-radius: 5px;
+    padding: 15px 20px 10px 20px;
+    text-align: left;
+
+    .field {
+        input {
+            border-radius: 5px;
+        }
+    }
+
+    .btns_field {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            width: 20%;
+            height: 35px;
+            font-size: 14px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .sign-in_btn {
+            width: 25%;
+        }
+    }
+
+    label {
+        color: rgb(25, 25, 25);
+    }
+}
+
+h2 {
+    color: rgb(25, 25, 25);
+    margin-bottom: 15px;
+}
+
+.form_hiden {
+    display: none;
+}
