@@ -123,8 +123,18 @@
                             opacity: 0.6;
                         }
 
+                        .receipt_btn {
+                            background-color: rgb(65, 90, 254);
+                            margin-bottom: 5px;
+                        }
+
                         .delete_btn {
                             background-color: rgb(177, 49, 49);
+                        }
+
+                        .edit_btn {
+                            background-color: rgb(91, 169, 81);
+                            margin-bottom: 5px;
                         }
                     }
 
@@ -189,6 +199,7 @@
             border-radius: 5px;
             margin: 0;
             margin-top: 8px;
+            font-size: 16px;
         }
 
         button {

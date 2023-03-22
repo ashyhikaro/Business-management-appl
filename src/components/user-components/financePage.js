@@ -259,17 +259,20 @@ function SortPanelFinance({
     )
 }
 
-function Items({currentItems, regime, userData, openForm, handlePageClick, pageCount, deleteItem, incomes, costs, setIncomes, setCosts, finalSort, setSortRegime, category, setCategory, projectName, setProjectName, currency, setCurrency, mode, setMode}) {
+function Items({currentItems, regime, userData, openForm, handlePageClick, pageCount, deleteItem, incomes, costs, setIncomes, setCosts, finalSort, setSortRegime, category, setCategory, projectName, setProjectName, currency, setCurrency, mode, setMode, usersNoteId, setUsersNoteId}) {
+    function editOpenForm(event) {
+        setMode('edit')
+
+        if (mode === 'create' && document.querySelector('.finance__form').classList.contains('form_hiden')) {
+            openForm()
+        }
+
+        setUsersNoteId(event.target.getAttribute('itemID').toString())
+    }
+    
     return (
         <div className="finance_main">
-            {/* {mode === 'create' ? 
-                <FinanceForm regime={regime} userData={userData} openForm={openForm} mode={mode}></FinanceForm> 
-            : 
-                <FinanceForm regime={regime} userData={userData} openForm={openForm} mode={mode}></FinanceForm>
-            } */}
-
-            <FinanceForm regime={regime} userData={userData} openForm={openForm} mode={mode}></FinanceForm>
-            
+            <FinanceForm regime={regime} userData={userData} openForm={openForm} mode={mode} usersNoteId={usersNoteId}></FinanceForm>
 
             <div className='finance_table_container'>
                 <div className='table'>
@@ -311,24 +314,21 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
                                     <button className='receipt_btn btn'>Form PDF</button>
                                     <br />
                                     <button 
+                                        className='edit_btn btn' 
+                                        onClick={editOpenForm} 
+                                        id={userData.id}
+                                        itemID={income.id}
+                                    >
+                                        Редагувати
+                                    </button>
+                                    <br />
+                                    <button 
                                         className='delete_btn btn' 
                                         onClick={deleteItem} 
                                         id={userData.id} 
                                         itemID={income.id}
                                     >
                                         Видалити
-                                    </button>
-                                    <br />
-                                    <button 
-                                        className='edit_btn btn' 
-                                        onClick={() => {
-                                            setMode('edit')
-                                            openForm()
-                                        }} 
-                                        id={userData.id}
-                                        itemID={income.id}
-                                    >
-                                        Редагувати
                                     </button>
                                 </div>
 
@@ -377,6 +377,8 @@ function FinancePage({userData, amountOfIncome, setAmountOfIncome, amountOfExpen
     const [mode, setMode] = useState('create')
     const [incomes, setIncomes] = useState([])
     const [costs, setCosts] = useState([])
+
+    const [usersNoteId, setUsersNoteId] = useState()
 
     const [sortRegime, setSortRegime] = useState('')
     const [category, setCategory] = useState('');
@@ -483,6 +485,12 @@ function FinancePage({userData, amountOfIncome, setAmountOfIncome, amountOfExpen
     };
 
     const handleChangeRegime = (event) => {
+        setMode('create')
+
+        if(!document.querySelector('.finance__form').classList.contains('form_hiden')) {
+            openForm()
+        }
+
         if (regime === 'income' && event.target.innerHTML !== 'Доходи') {
             setRegime('costs')
         }  else {
@@ -501,14 +509,21 @@ function FinancePage({userData, amountOfIncome, setAmountOfIncome, amountOfExpen
         event.target.classList.toggle('active')
     }
 
-    function openForm() {
+    function openForm(backTriger) {
         document.querySelector('.sort_panel').classList.toggle('sort_panel_non_active')
 
-        if (!document.querySelector('form').classList.contains('form_hiden')) {
+        if (mode === 'edit' && !document.querySelector('form').classList.contains('form_hiden')) {
             setMode('create')
+            document.querySelector('form').classList.add('form_hiden')
+            document.querySelector('.sort_panel').classList.add('sort_panel_non_active')
         }
 
-        document.querySelector('form').classList.toggle('form_hiden')
+        if (backTriger === 'back') {
+            document.querySelector('form').classList.add('form_hiden')
+            document.querySelector('.sort_panel').classList.remove('sort_panel_non_active')
+        } else {
+            document.querySelector('form').classList.toggle('form_hiden')
+        }
     }
 
     function sumDateSort(arr, param, direction) {
@@ -727,6 +742,8 @@ function FinancePage({userData, amountOfIncome, setAmountOfIncome, amountOfExpen
                 setCurrency={setCurrency}
                 mode={mode}
                 setMode={setMode}
+                usersNoteId={usersNoteId}
+                setUsersNoteId={setUsersNoteId}
             />
         </div>
     );

@@ -11,6 +11,17 @@ function RegistrationPage({createAccount, customError}) {
         const [regionInfo, setRegion] = useState({ country: '', region: ''})
         const navigate = useNavigate()
 
+        const now = new Date()
+        const month = now.getMonth() + 1
+        const day = now.getDate()
+
+        const dateObj = {
+                day: String(day).length === 1 ? `0${day}` : day,
+                month: String(month).length === 1 ? `0${month}` : month,
+                year: now.getFullYear(),
+        }
+
+
         const onSubmit = (data) => {
                 if (data.password === data.passTwo) {
                         createAccount({...data, country: regionInfo.country, region: regionInfo.region})
@@ -96,7 +107,7 @@ function RegistrationPage({createAccount, customError}) {
                                                                         {...register('lastname', {
                                                                                 required: 'error lastname'
                                                                         })}
-                                                                        maxLength="10"
+                                                                        maxLength="40"
                                                                 />
                                                                 {errors.lastname && <p className='error_message'>*Відсутнє прізвище</p>}
                                                         </Form.Field>
@@ -105,10 +116,12 @@ function RegistrationPage({createAccount, customError}) {
                                                                 <label>Дата народження:</label>
                                                                 <input  type='date'
                                                                         {...register('age', {
-                                                                                required: 'error age'
+                                                                                required: 'error age',
+                                                                                max: `${dateObj.year - 18}-${dateObj.month}-${dateObj.day}`,
+                                                                                min: `${dateObj.year - 100}-${dateObj.month}-${dateObj.day}`,
                                                                         })}
                                                                 />
-                                                                {errors.age && <p className='error_message'>*Відсутня дата народження користувача</p>}
+                                                                {errors.age && <p className='error_message'>*Некоректна дата народження</p>}
                                                         </Form.Field>
 
                                                         <Form.Field>

@@ -10,10 +10,28 @@ import { useState } from 'react';
 
 import { db } from "../../../index";
 
-function FinanceForm({regime, userData, openForm, mode}) {
+function FinanceForm({regime, userData, openForm, mode, usersNoteId}) {
     const { register, reset, handleSubmit, formState, formState: { errors, isSubmitSuccessful } } = useForm();
     const { setValue, value } = useComboboxControls();
     const [currency, setCurrency] = useState('')
+
+    let oldNote
+    
+    if (mode === 'edit') {
+        db.ref(regime).child(userData.id).child(usersNoteId).once('value', function(elem) {
+            oldNote = elem.val()
+        });
+    }
+
+    const now = new Date()
+    const month = now.getMonth() + 1
+    const day = now.getDate()
+
+    const dateObj = {
+        day: String(day).length === 1 ? `0${day}` : day,
+        month: String(month).length === 1 ? `0${month}` : month,
+        year: now.getFullYear(),
+    }
 
     const onSubmit = (data) => {
         const dateOfTrans = data.date.split('-')
@@ -24,16 +42,23 @@ function FinanceForm({regime, userData, openForm, mode}) {
             date: `${dateOfTrans[2]}-${dateOfTrans[1]}-${dateOfTrans[0]}`
         }
 
-        if (!value) {
-            regime === 'income' ? 
-                newDBObject = {
-                    ...newDBObject,
-                    value: 'За товар/послугу',
-                } :
+        if (mode === 'create') {
+            if (!value) {
+                regime === 'income' ? 
+                    newDBObject = {
+                        ...newDBObject,
+                        value: 'За товар/послугу',
+                    } :
+                    newDBObject = {
+                        ...newDBObject, 
+                        value: 'Телефон/інтернет', 
+                    }
+            } else {
                 newDBObject = {
                     ...newDBObject, 
-                    value: 'Телефон/інтернет', 
+                    value,
                 }
+            }
         } else {
             newDBObject = {
                 ...newDBObject, 
@@ -41,7 +66,11 @@ function FinanceForm({regime, userData, openForm, mode}) {
             }
         }
 
-        currency === '' ? newDBObject = {...newDBObject, curr: 'UAH',} : newDBObject = {...newDBObject, curr: currency,}
+        if (mode === 'create') {
+            currency === '' ? newDBObject = {...newDBObject, curr: 'UAH',} : newDBObject = {...newDBObject, curr: currency,}
+        } else {
+            newDBObject = {...newDBObject, curr: currency,}
+        }
 
         const now = new Date()
         const month = now.getMonth() + 1
@@ -66,18 +95,12 @@ function FinanceForm({regime, userData, openForm, mode}) {
                 }
             })
         } else {
-            let noteId = document.querySelector('.edit_btn').getAttribute('itemID').toString()
-            let oldNote
-            
-            db.ref(regime).child(userData.id).child(noteId).once('value', function(elem) {
-                oldNote = elem.val()
-            });
 
             db.ref(regime).child(userData.id).update({
-                [noteId] : {
+                [usersNoteId] : {
                     DateOfCreation: oldNote.DateOfCreation,
                     DateOfDBInput: oldNote.DateOfDBInput,
-                    Date: newDBObject.date ? newDBObject.date : oldNote.Date,
+                    Date: newDBObject.date && newDBObject.date !== 'undefined-undefined-' ? newDBObject.date : oldNote.Date,
                     Value: newDBObject.sum ? newDBObject.sum : oldNote.Value,
                     Currency: newDBObject.curr ? newDBObject.curr : oldNote.Currency,
                     Type: newDBObject.value ? newDBObject.value : oldNote.Type,
@@ -110,13 +133,22 @@ function FinanceForm({regime, userData, openForm, mode}) {
                         <input  
                             type="date"
                             {...register('date', {
-                                required: 'error date'
+                                required: 'error date',
+                                max: `${dateObj.year + 5}-${dateObj.month}-${dateObj.day}`,
+                                min: `${dateObj.year - 5}-${dateObj.month}-${dateObj.day}`,
                             })}
                         />
                     :   
                         <input 
-                            type="date" 
-                            {...register('date')}
+                            {...register('date', {
+                                required: false,
+                                max: `${dateObj.year + 5}-${dateObj.month}-${dateObj.day}`,
+                                min: `${dateObj.year - 5}-${dateObj.month}-${dateObj.day}`,
+                            })}
+                            placeholder={oldNote.Date}
+                            type="text"
+                            onFocus={(e) => e.target.type='date'}
+                            onBlur={(e) => e.target.type = "text"}
                         /> 
                     }
                     {errors.date && <p className='error_message'>*Заповніть поле</p>}
@@ -126,7 +158,7 @@ function FinanceForm({regime, userData, openForm, mode}) {
                     <Form.Field>
                         <label>Сума платежу:</label>
                         {mode === 'create' ? 
-                            <input  
+                            <input
                                 type="number"
                                 placeholder='Сума...'
                                 {...register('sum', {
@@ -136,10 +168,12 @@ function FinanceForm({regime, userData, openForm, mode}) {
                                 max={1000000000}
                             />
                         :   
-                            <input  
+                            <input
                                 type="number"
-                                placeholder='Сума...'
-                                {...register('sum')}
+                                placeholder={oldNote.Value}
+                                {...register('sum', {
+                                    required: false,
+                                })}
                                 min={1}
                                 max={1000000000}
                             />
@@ -148,20 +182,37 @@ function FinanceForm({regime, userData, openForm, mode}) {
                     </Form.Field>
 
                     <Form.Field>
-                        <DatalistInput
-                            style={{marginTop: '8px'}}
-                            value={currency}
-                            setValue={setCurrency}
-                            placeholder="UAH"
-                            items={[
-                                { id: 'UAH', value: 'UAH' },
-                                { id: 'USD', value: 'USD' },
-                                { id: 'EUR', value: 'EUR' },
-                                { id: 'GBP', value: 'GBP' },
-                                { id: 'JPY', value: 'JPY' },
-                                { id: 'CNY', value: 'CNY' },
-                            ]}
-                        />
+                        {mode === 'create' ?
+                            <DatalistInput
+                                style={{marginTop: '8px'}}
+                                value={currency}
+                                setValue={setCurrency}
+                                placeholder="UAH"
+                                items={[
+                                    { id: 'UAH', value: 'UAH' },
+                                    { id: 'USD', value: 'USD' },
+                                    { id: 'EUR', value: 'EUR' },
+                                    { id: 'GBP', value: 'GBP' },
+                                    { id: 'JPY', value: 'JPY' },
+                                    { id: 'CNY', value: 'CNY' },
+                                ]}
+                            />
+                        :
+                            <DatalistInput
+                                style={{marginTop: '8px'}}
+                                value={currency}
+                                setValue={setCurrency}
+                                placeholder={oldNote.Currency}
+                                items={[
+                                    { id: 'UAH', value: 'UAH' },
+                                    { id: 'USD', value: 'USD' },
+                                    { id: 'EUR', value: 'EUR' },
+                                    { id: 'GBP', value: 'GBP' },
+                                    { id: 'JPY', value: 'JPY' },
+                                    { id: 'CNY', value: 'CNY' },
+                                ]}
+                            />
+                        }
                         {errors.sum && <p className='error_message'>&nbsp;</p>}
                     </Form.Field>
                 </Form.Field>
@@ -170,49 +221,88 @@ function FinanceForm({regime, userData, openForm, mode}) {
 
                 <Form.Field>
                     <label>Категорія:</label>
-
-                    {regime === 'income' ? 
-                        <DatalistInput
-                            style={{marginTop: '8px'}}
-                            value={value}
-                            setValue={setValue}
-                            placeholder="За товар/послугу"
-                            items={[
-                                {id: 'Payment', value: 'За товар/послугу'},
-                                {id: 'Prepayment', value: 'Передоплата'},
-                                {id: 'Another', value: 'Інші надходження'},
-                            ]}
-                        /> :
-                        <DatalistInput
-                            style={{marginTop: '8px'}}
-                            value={value}
-                            setValue={setValue}
-                            placeholder="Телефон/інтернет"
-                            items={[
-                                {id: 'Connection', value: 'Телефон/інтернет'},
-                                {id: 'Suppliers', value: 'Оплата постачальникам'},
-                                {id: 'Rent', value: 'Оренда'},
-                                {id: 'Taxes', value: 'Податки'},
-                                {id: 'Salary', value: 'Заробітна плата'},
-                                {id: 'Another payments', value: 'Інші виплати'},
-                            ]}
-                        />
+                    
+                    {mode === 'create' ?
+                        regime === 'income' ? 
+                            <DatalistInput
+                                style={{marginTop: '8px'}}
+                                value={value}
+                                setValue={setValue}
+                                placeholder="За товар/послугу"
+                                items={[
+                                    {id: 'Payment', value: 'За товар/послугу'},
+                                    {id: 'Prepayment', value: 'Передоплата'},
+                                    {id: 'Another', value: 'Інші надходження'},
+                                ]}
+                            /> :
+                            <DatalistInput
+                                style={{marginTop: '8px'}}
+                                value={value}
+                                setValue={setValue}
+                                placeholder="Телефон/інтернет"
+                                items={[
+                                    {id: 'Connection', value: 'Телефон/інтернет'},
+                                    {id: 'Suppliers', value: 'Оплата постачальникам'},
+                                    {id: 'Rent', value: 'Оренда'},
+                                    {id: 'Taxes', value: 'Податки'},
+                                    {id: 'Salary', value: 'Заробітна плата'},
+                                    {id: 'Another payments', value: 'Інші виплати'},
+                                ]}
+                            />
+                        :
+                        regime === 'income' ? 
+                            <DatalistInput
+                                style={{marginTop: '8px'}}
+                                value={value}
+                                setValue={setValue}
+                                placeholder={oldNote.Type}
+                                items={[
+                                    {id: 'Payment', value: 'За товар/послугу'},
+                                    {id: 'Prepayment', value: 'Передоплата'},
+                                    {id: 'Another', value: 'Інші надходження'},
+                                ]}
+                            /> :
+                            <DatalistInput
+                                style={{marginTop: '8px'}}
+                                value={value}
+                                setValue={setValue}
+                                placeholder={oldNote.Type}
+                                items={[
+                                    {id: 'Connection', value: 'Телефон/інтернет'},
+                                    {id: 'Suppliers', value: 'Оплата постачальникам'},
+                                    {id: 'Rent', value: 'Оренда'},
+                                    {id: 'Taxes', value: 'Податки'},
+                                    {id: 'Salary', value: 'Заробітна плата'},
+                                    {id: 'Another payments', value: 'Інші виплати'},
+                                ]}
+                            />
                     }
+                    
                 </Form.Field>
 
                 <Form.Field>
                     <label>Проєкт:</label>
-                    <input  
-                        type="text"
-                        placeholder='Проєкт...'
-                        {...register('project')}
-                        maxLength="30"
-                    />
+                    {mode === 'create' ? 
+                        <input  
+                            type="text"
+                            placeholder='Проєкт...'
+                            {...register('project')}
+                            maxLength="30"
+                        /> 
+                    :
+                        <input  
+                            type="text"
+                            placeholder={oldNote.Project}
+                            {...register('project')}
+                            maxLength="30"
+                        /> 
+                    }
+                    
                 </Form.Field>
 
                 <Form.Field className='btns_field'>
-                    <Button className='non_active_btn' onClick={() => {setValue(''); openForm()}} type='reset'>Назад</Button>
-                    <Button className='sign-in_btn' type='submit'>{mode === 'create' ? 'Створити' : 'Редагувати'}</Button>
+                    <Button className='non_active_btn' onClick={() => {setValue(''); openForm('back')}} type='reset'>Назад</Button>
+                    <Button className='sign-in_btn' type='submit'>{mode === 'create' ? 'Створити' : 'Зберегти'}</Button>
                 </Form.Field>
 
             </Form>

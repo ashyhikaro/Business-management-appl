@@ -209,7 +209,6 @@ function SortPanelLoans({finalSort, setSortRegime, userData, category, setCatego
             <div className='sort__category'>
                 <h4>Вид позики: </h4>
                 <DatalistInput
-                    style={{marginTop: '8px'}}
                     value={category}
                     setValue={setCategory}
                     placeholder="Ми винні"
@@ -237,6 +236,8 @@ function SortPanelLoans({finalSort, setSortRegime, userData, category, setCatego
 
 function LoanPage({userData}) {
     const [loans, setLoans] = useState([])
+    const [mode, setMode] = useState('create')
+    const [usersNoteId, setUsersNoteId] = useState()
 
     const [sortRegime, setSortRegime] = useState('')
     const [category, setCategory] = useState('');
@@ -248,9 +249,32 @@ function LoanPage({userData}) {
     let pageCount =  loans ? Math.ceil(loans.length / 10) : null
     let currentItems = loans ? loans.slice(itemOffset, endOffset) : null
 
-    function openForm() {
+    function openForm(backTriger) {
         document.querySelector('.sort_panel').classList.toggle('sort_panel_non_active')
-        document.querySelector('form').classList.toggle('form_hiden')
+
+        if (mode === 'edit' && !document.querySelector('form').classList.contains('form_hiden')) {
+            setMode('create')
+            document.querySelector('form').classList.add('form_hiden')
+            document.querySelector('.sort_panel').classList.add('sort_panel_non_active')
+        }
+
+        if (backTriger === 'back') {
+            document.querySelector('form').classList.add('form_hiden')
+            document.querySelector('.sort_panel').classList.remove('sort_panel_non_active')
+        } else {
+            document.querySelector('form').classList.toggle('form_hiden')
+        }
+        
+    }
+
+    function editOpenForm(event) {
+        setMode('edit')
+
+        if (mode === 'create' && document.querySelector('.finance__form').classList.contains('form_hiden')) {
+            openForm()
+        }
+        
+        setUsersNoteId(event.target.getAttribute('itemID').toString())
     }
 
     const handlePageClick = (event) => {
@@ -468,7 +492,7 @@ function LoanPage({userData}) {
             </div>
 
             <div className="finance_main">
-                <LoanForm openForm={openForm} userData={userData} />
+                <LoanForm openForm={openForm} userData={userData} mode={mode} usersNoteId={usersNoteId}/>
 
                 <div className='finance_table_container'>
                     <div className='table'>
@@ -505,6 +529,17 @@ function LoanPage({userData}) {
                                     </div> 
 
                                     <div className='item_panel table_col'>
+                                        <button className='receipt_btn btn'>Form PDF</button>
+                                        <br />
+                                        <button 
+                                            className='edit_btn btn' 
+                                            onClick={editOpenForm} 
+                                            id={userData.id}
+                                            itemID={loan.id}
+                                        >
+                                            Редагувати
+                                        </button>
+                                        <br />
                                         <button 
                                             className='delete_btn btn' 
                                             onClick={deleteItem} 
