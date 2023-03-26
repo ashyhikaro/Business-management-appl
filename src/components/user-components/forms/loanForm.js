@@ -87,6 +87,7 @@ function LoanForm({userData, openForm, mode, usersNoteId}) {
                     Currency: newDBObject.curr,
                     Type: newDBObject.value,
                     Name: newDBObject.name ? newDBObject.name : '',
+                    PaidOut: false,
                 }
             })
         } else {
@@ -99,6 +100,7 @@ function LoanForm({userData, openForm, mode, usersNoteId}) {
                     Currency: newDBObject.curr ? newDBObject.curr : oldNote.Currency,
                     Type: newDBObject.value ? newDBObject.value : oldNote.Type,
                     Name: newDBObject.name ? newDBObject.name : oldNote.Name,
+                    PaidOut: oldNote.PaidOut,
                 }
             })
         }

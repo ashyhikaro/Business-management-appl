@@ -70,7 +70,7 @@ function PolarAreaChart({title, financeArr, financeType}){
 
     return (
         <div className="chart-container">
-            <h2 style={{ textAlign: "center", fontSize: '20px', fontWeight: '400'}}>{title}</h2>
+            <h2 style={{ textAlign: "center"}}>{title}</h2>
             <br />
             <PolarArea
                 data={chartData}

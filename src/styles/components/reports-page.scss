@@ -1,0 +1,123 @@
+.reports_page {
+    .title {
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgb(154, 154, 154);
+    }
+
+    .reports_page__main {
+        display: flex;
+        width: 100%;
+        gap: 20px;
+
+        form {
+            background-color: rgb(213, 213, 213);
+            width: 25%;
+            height: 50%;
+            border-radius: 5px;
+            padding: 15px 20px 10px 20px;
+            text-align: left;
+    
+            .field {
+                input {
+                    margin: 8px 0 0 0;
+                }
+            }
+    
+            .btns_field {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+        
+                button {
+                    width: 20%;
+                    height: 35px;
+                    font-size: 14px;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                }
+        
+                button:hover {
+                    opacity: 0.8;
+                }
+        
+                .sign-in_btn {
+                    width: 30%;
+                }
+            }
+        
+            label {
+                color: rgb(25, 25, 25);
+            }
+        }
+
+        .reports__container {
+            width: 70%;
+            .reports__container_title {
+                font-size: 28px;
+                font-weight: 600;
+                margin-bottom: 12px;
+            }
+
+            .reports__title {
+                margin-bottom: 8px;
+                font-size: 26px;
+            }
+
+            .report_finances {
+                width: 70%;
+                display: flex;
+                gap: 30px;
+                margin-bottom: 20px;
+
+                .report_container {
+                    width: 48%;
+                    min-height: 220px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    padding: 20px;
+                    background-color: white;
+
+                    .report_title {
+                        margin-bottom: 8px;
+                        font-size: 20px;
+                    }
+
+                    .report_item {
+                        font-size: 18px;
+                        margin-bottom: 4px;
+                    }
+
+                    .good {
+                        color: rgb(61, 138, 61);
+                    }
+
+                    .bad {
+                        color: rgb(205, 56, 56);
+                    }
+
+                    .dif {
+                        margin-top: 20px;
+                        color: rgb(102, 102, 102);
+                    }
+                }
+
+                .report_container:first-of-type {
+                    border-radius: 20px 0 0 20px;
+                }
+
+                .report_container:last-of-type {
+                    border-radius: 0 20px 20px 0;
+                }
+            }
+
+            .report_finances:last-of-type {
+                .report_container {
+                    min-height: 130px;
+                }
+            }
+        }
+    }
+}

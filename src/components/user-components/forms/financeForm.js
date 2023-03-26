@@ -47,11 +47,11 @@ function FinanceForm({regime, userData, openForm, mode, usersNoteId}) {
                 regime === 'income' ? 
                     newDBObject = {
                         ...newDBObject,
-                        value: 'За товар/послугу',
+                        value: 'За товар / послугу',
                     } :
                     newDBObject = {
                         ...newDBObject, 
-                        value: 'Телефон/інтернет', 
+                        value: 'Телефон / інтернет', 
                     }
             } else {
                 newDBObject = {
@@ -228,9 +228,9 @@ function FinanceForm({regime, userData, openForm, mode, usersNoteId}) {
                                 style={{marginTop: '8px'}}
                                 value={value}
                                 setValue={setValue}
-                                placeholder="За товар/послугу"
+                                placeholder="За товар / послугу"
                                 items={[
-                                    {id: 'Payment', value: 'За товар/послугу'},
+                                    {id: 'Payment', value: 'За товар / послугу'},
                                     {id: 'Prepayment', value: 'Передоплата'},
                                     {id: 'Another', value: 'Інші надходження'},
                                 ]}
@@ -239,9 +239,9 @@ function FinanceForm({regime, userData, openForm, mode, usersNoteId}) {
                                 style={{marginTop: '8px'}}
                                 value={value}
                                 setValue={setValue}
-                                placeholder="Телефон/інтернет"
+                                placeholder="Телефон / інтернет"
                                 items={[
-                                    {id: 'Connection', value: 'Телефон/інтернет'},
+                                    {id: 'Connection', value: 'Телефон / інтернет'},
                                     {id: 'Suppliers', value: 'Оплата постачальникам'},
                                     {id: 'Rent', value: 'Оренда'},
                                     {id: 'Taxes', value: 'Податки'},
@@ -257,7 +257,7 @@ function FinanceForm({regime, userData, openForm, mode, usersNoteId}) {
                                 setValue={setValue}
                                 placeholder={oldNote.Type}
                                 items={[
-                                    {id: 'Payment', value: 'За товар/послугу'},
+                                    {id: 'Payment', value: 'За товар / послугу'},
                                     {id: 'Prepayment', value: 'Передоплата'},
                                     {id: 'Another', value: 'Інші надходження'},
                                 ]}
@@ -268,7 +268,7 @@ function FinanceForm({regime, userData, openForm, mode, usersNoteId}) {
                                 setValue={setValue}
                                 placeholder={oldNote.Type}
                                 items={[
-                                    {id: 'Connection', value: 'Телефон/інтернет'},
+                                    {id: 'Connection', value: 'Телефон / інтернет'},
                                     {id: 'Suppliers', value: 'Оплата постачальникам'},
                                     {id: 'Rent', value: 'Оренда'},
                                     {id: 'Taxes', value: 'Податки'},

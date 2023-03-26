@@ -9,7 +9,7 @@ import { db } from '../../index';
 
 const LoanForm = lazy(() => import('./forms/loanForm'))
 
-function SortPanelLoans({finalSort, setSortRegime, userData, category, setCategory, nameOfParty, setNameOfParty, currency, setCurrency, setLoans}) {
+function SortPanelLoans({finalSort, setSortRegime, userData, category, setCategory, nameOfParty, setNameOfParty, currency, setCurrency, setLoans, paidOutStatus, setPaidOutStatus}) {
 
     let sortedArr = []
 
@@ -38,8 +38,17 @@ function SortPanelLoans({finalSort, setSortRegime, userData, category, setCatego
             sortedArr = sortedArr.filter(item => item.Currency === currency)
         }
 
+        if (paidOutStatus) {
+            if (paidOutStatus === 'Сплачено') {
+                sortedArr = sortedArr.filter(item => item.PaidOut === true)
+            } else {
+                sortedArr = sortedArr.filter(item => item.PaidOut === false)
+            }
+        }
+
         setLoans(sortedArr)
-    }, [category, nameOfParty, currency])
+
+    }, [category, nameOfParty, currency, paidOutStatus])
 
     function sortFinance(param, direction) {
         return [...sortedArr].sort(function(a, b) {
@@ -92,7 +101,6 @@ function SortPanelLoans({finalSort, setSortRegime, userData, category, setCatego
 
                 if (direction === 'top') {
                     setSortRegime('sum/top')
-                    console.log(value1, value2)
                     if (value1 > value2) {
                         return 1
                     } else {
@@ -165,6 +173,7 @@ function SortPanelLoans({finalSort, setSortRegime, userData, category, setCatego
         setNameOfParty('')
         setCategory('')
         setCurrency('')
+        setPaidOutStatus('')
 
         document.querySelector('.project_input').value = ''
     }
@@ -218,6 +227,18 @@ function SortPanelLoans({finalSort, setSortRegime, userData, category, setCatego
                     ]}
                 />
             </div>
+            <div className='sort__category'>
+                <h4>Статус: </h4>
+                <DatalistInput
+                    value={paidOutStatus}
+                    setValue={setPaidOutStatus}
+                    placeholder="Ми винні"
+                    items={[
+                        {id: 'True', value: 'Сплачено'},
+                        {id: 'False', value: 'Не сплачено'},
+                    ]}
+                />
+            </div>
 
             <div className='sort__project'>
                 <h4>Ім'я \ компанія: </h4>
@@ -243,6 +264,7 @@ function LoanPage({userData}) {
     const [category, setCategory] = useState('');
     const [nameOfParty, setNameOfParty] = useState('');
     const [currency, setCurrency] = useState('');
+    const [paidOutStatus, setPaidOutStatus] = useState('');
 
     const [itemOffset, setItemOffset] = useState(0);
     let endOffset = itemOffset + 10
@@ -422,6 +444,14 @@ function LoanPage({userData}) {
             sortedArr2 = sortedArr2.filter(item => item.Currency === currency)
         }
 
+        if (paidOutStatus) {
+            if (paidOutStatus === 'Сплачено') {
+                sortedArr2 = sortedArr2.filter(item => item.PaidOut === true)
+            } else {
+                sortedArr2 = sortedArr2.filter(item => item.PaidOut === false)
+            }
+        }
+
         return sortedArr2
     }
 
@@ -432,6 +462,33 @@ function LoanPage({userData}) {
 
         if (currentItems.length === 1) {
             setItemOffset(0);
+        }
+
+        let sortedArr = []
+
+        db.ref("loans").child(userData.id).on('value', elem => {
+            let obj = elem.val()
+
+            for (let key in obj) {
+                if (key !== '1') {
+                    sortedArr.push({id: key, ...obj[key]})
+                }
+            }
+        })
+
+        sortedArr = finalSort(sortedArr)
+
+        setLoans(sortedArr)
+    }
+
+    function updateStatus(event) {
+        const userId = event.target.id
+        const itemId = event.target.getAttribute('itemID').toString()
+
+        if (event.target.innerHTML === 'Відкрити') {
+            db.ref("loans").child(userId).child(itemId).update({PaidOut: false})
+        } else {
+            db.ref("loans").child(userId).child(itemId).update({PaidOut: true})
         }
 
         let sortedArr = []
@@ -510,26 +567,38 @@ function LoanPage({userData}) {
                                 <div className="table_row" key={index}>
 
                                     <div className='item_name table_col'>
-                                        <p className='break_text name'>{loan.Name}</p>
+                                        {loan.PaidOut ? 
+                                            <p className='break_text name loan_paid_out'>{loan.Name}</p> :
+                                            <p className='break_text name'>{loan.Name}</p>
+                                        }
                                         <p className='date_of_creation'>{loan.DateOfCreation}</p>
                                     </div>
 
                                     <div className='item_value table_col'>
-                                        <p className='break_text value costValue'>{loan.Type === 'Ми винні' ? loan.Value : ''}</p>
+                                        {loan.PaidOut ? 
+                                            <p className='break_text value costValue loan_paid_out'>{loan.Type === 'Ми винні' ? loan.Value : ''}</p> :
+                                            <p className='break_text value costValue'>{loan.Type === 'Ми винні' ? loan.Value : ''}</p> 
+                                        }
                                         <p className='value_currency'>{loan.Type === 'Ми винні' ? loan.Currency : ''}</p>
                                     </div>
 
                                     <div className='item_value table_col'>
-                                        <p className='break_text value incomeValue'>{loan.Type === 'Нам винні' ? loan.Value : ''}</p>
+                                        {loan.PaidOut ? 
+                                            <p className='break_text value incomeValue loan_paid_out'>{loan.Type === 'Нам винні' ? loan.Value : ''}</p> :
+                                            <p className='break_text value incomeValue'>{loan.Type === 'Нам винні' ? loan.Value : ''}</p>
+                                        }
                                         <p className='value_currency'>{loan.Type === 'Нам винні' ? loan.Currency : ''}</p>
                                     </div>
 
                                     <div className='item_date table_col'>
-                                        <p className='date'>{loan.Date}</p>
+                                        {loan.PaidOut ? <p className='date loan_paid_out'>{loan.Date}</p> : <p className='date'>{loan.Date}</p>}
                                     </div> 
 
                                     <div className='item_panel table_col'>
-                                        <button className='receipt_btn btn'>Form PDF</button>
+                                        {loan.PaidOut ? 
+                                            <button className='receipt_btn btn' onClick={updateStatus} id={userData.id} itemID={loan.id}>Відкрити</button> :
+                                            <button className='receipt_btn btn' onClick={updateStatus} id={userData.id} itemID={loan.id}>Закрити</button>
+                                        }
                                         <br />
                                         <button 
                                             className='edit_btn btn' 
@@ -581,6 +650,8 @@ function LoanPage({userData}) {
                     setCurrency={setCurrency}
                     setLoans={setLoans}
                     loans={loans}
+                    paidOutStatus={paidOutStatus}
+                    setPaidOutStatus={setPaidOutStatus}
                 />
             </div>
         </div>

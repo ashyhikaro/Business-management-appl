@@ -253,6 +253,7 @@ function AppLogin() {
 
               <Route path="/reports" element={
                 <ReportsPage
+                  userData={userData}
                 />} 
               />
 
