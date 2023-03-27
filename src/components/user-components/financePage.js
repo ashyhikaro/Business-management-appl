@@ -1,5 +1,9 @@
 import '../../styles/components/finance-page.scss'
 import '../../styles/pagination.scss'
+import CyrillicFont from '../../fonts/FreeSans.ttf'
+
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable'
 
 import DatalistInput from 'react-datalist-input';
 import { useEffect, useState, lazy } from "react";
@@ -269,6 +273,48 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
 
         setUsersNoteId(event.target.getAttribute('itemID').toString())
     }
+
+    const generatePDF = (target) => {
+        const id = target.id
+        const itemId = target.getAttribute('itemID')
+        let element
+
+        db.ref(regime).child(id).child(itemId).once('value', (elem) => {
+            element = elem.val()    
+        })
+    
+        const doc = new jsPDF('landscape', 'pt', 'a4')
+        doc.addFont(CyrillicFont, 'CyrillicFont', 'normal');
+
+        doc.setFont('CyrillicFont')
+        doc.setFontSize(26);
+        doc.text(40, 50, 'Звіт про отримання прибутку')
+
+        const tableFont = 'CyrillicFont';
+        const tableFontSize = 14;
+        const tableFontSizeVal = 12;
+
+        const headStyles = {
+            font: tableFont,
+            fontSize: tableFontSize,
+        };
+        const bodyStyles = {
+            font: tableFont,
+            fontSize: tableFontSizeVal,
+        };
+
+        doc.autoTable({
+            head: [['Дата запису', 'Дата отримання', 'Назва', 'Категорія', 'Сума']],
+            body: [
+              [element.DateOfCreation, element.Date, element.Project, element.Type, `${element.Value + ' ' + element.Currency}`],
+            ],
+            startY: 80,
+            headStyles,
+            bodyStyles,
+        })
+
+        doc.save('document')
+    }
     
     return (
         <div className="finance_main">
@@ -313,7 +359,7 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
                                 <div className='item_panel item_panel2 table_col'>
                                     <button 
                                         className='receipt_btn btn'
-                                        onClick={() => null} 
+                                        onClick={(e)=>generatePDF(e.target)} 
                                         id={userData.id}
                                         itemID={income.id}
                                     >
@@ -375,6 +421,7 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
                 currency={currency}
                 setCurrency={setCurrency}
             />
+            
         </div>
     );
 }
