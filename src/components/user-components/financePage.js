@@ -281,7 +281,7 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
                         <p className="table_title">Сума</p>
                         <p className="table_title">Категорія</p>
                         <p className="table_title">Проєкт</p>
-                        <p className="table_title">Управління</p>
+                        <p className="table_title">Панель управління</p>
                     </div>
                     <div className='table_rows'>
                         {currentItems.map((income, index) => 
@@ -310,8 +310,15 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
                                     <p className='break_text project'>{income.Project}</p>
                                 </div>
 
-                                <div className='item_panel table_col'>
-                                    <button className='receipt_btn btn'>Form PDF</button>
+                                <div className='item_panel item_panel2 table_col'>
+                                    <button 
+                                        className='receipt_btn btn'
+                                        onClick={() => null} 
+                                        id={userData.id}
+                                        itemID={income.id}
+                                    >
+                                        PDF-звіт
+                                    </button>
                                     <br />
                                     <button 
                                         className='edit_btn btn' 

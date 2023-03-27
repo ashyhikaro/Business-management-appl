@@ -21,14 +21,60 @@ function ReportsPage({userData}) {
     const [ costsArr, setCostsArr] = useState([]);
     const [ loansArr, setLoansArr] = useState([]);
 
-    function findFinances(type, objFinance) {
+    function checkFinances(objFinance) {
         let financeArr = []
 
-        for (let key in objFinance) {
-            if (key !== '1' && objFinance[key].Date.split('-')[2] === yearFinance) {
-                financeArr.push({id: key, ...objFinance[key]})
+        if (yearFinance && !quarterFinance) {
+            for (let key in objFinance) {
+                if (key !== '1' && objFinance[key].Date.split('-')[2] === yearFinance) {
+                    financeArr.push({id: key, ...objFinance[key]})
+                }
+            }
+        } else {
+            if (yearFinance && quarterFinance && !monthFinance) {
+                for (let key in objFinance) {
+                    if (key !== '1' && objFinance[key].Date.split('-')[2] === yearFinance ) {
+                        switch (quarterFinance) {
+                            case 'Перший':
+                                if (objFinance[key].Date.split('-')[1] === '01' || objFinance[key].Date.split('-')[1] === '02' || objFinance[key].Date.split('-')[1] === '03') {
+                                    financeArr.push({id: key, ...objFinance[key]})
+                                }
+                                break;
+                            case 'Другий':
+                                if (objFinance[key].Date.split('-')[1] === '04' || objFinance[key].Date.split('-')[1] === '05' || objFinance[key].Date.split('-')[1] === '06') {
+                                    financeArr.push({id: key, ...objFinance[key]})
+                                }
+                                break;
+                            case 'Третій':
+                                if (objFinance[key].Date.split('-')[1] === '07' || objFinance[key].Date.split('-')[1] === '08' || objFinance[key].Date.split('-')[1] === '09') {
+                                    financeArr.push({id: key, ...objFinance[key]})
+                                }
+                                break;
+                            case 'Четвертий':
+                                if (objFinance[key].Date.split('-')[1] === '10' || objFinance[key].Date.split('-')[1] === '11' || objFinance[key].Date.split('-')[1] === '12') {
+                                    financeArr.push({id: key, ...objFinance[key]})
+                                }
+                                break;
+                        }
+                    }
+                }
+            } else {
+                if (yearFinance && quarterFinance && monthFinance) {
+                    const monthIndex = String(months.indexOf(monthFinance)+1).length > 1 ? String(months.indexOf(monthFinance)+1) : `0${String(months.indexOf(monthFinance)+1)}`
+                    for (let key in objFinance) {
+                        if (key !== '1' && objFinance[key].Date.split('-')[2] === yearFinance && objFinance[key].Date.split('-')[1] ===  monthIndex) {
+                            financeArr.push({id: key, ...objFinance[key]})
+                        }
+                    }
+                }
             }
         }
+
+        return financeArr
+    }
+
+    function findFinances(type, objFinance) {
+        let financeArr = checkFinances(objFinance)
 
         const sumByType = financeArr.reduce((acc, cur) => {
             if (acc[cur.Type]) {
@@ -59,13 +105,8 @@ function ReportsPage({userData}) {
     }
 
     function findLoans(objFinance) {
-        let financeArr = [], loansPaidOut = [], loansNotPaidOut = []
-
-        for (let key in objFinance) {
-            if (key !== '1' && objFinance[key].Date.split('-')[2] === yearFinance) {
-                financeArr.push({id: key, ...objFinance[key]})
-            }
-        }
+        let financeArr = checkFinances(objFinance)
+        let loansPaidOut = [], loansNotPaidOut = []
 
         financeArr.forEach(item => {
             item.PaidOut ? loansPaidOut.push(item) : loansNotPaidOut.push(item)
@@ -128,7 +169,7 @@ function ReportsPage({userData}) {
     }
 
     const onSubmit = (data) => {
-        if (yearFinance) {
+        if (yearFinance !== '') {
             db.ref('income').child(userData.id).on('value', function(elem) {
                 let incomesObj = elem.val()
                 findFinances('income', incomesObj)
@@ -143,6 +184,10 @@ function ReportsPage({userData}) {
                 let loansObj = elem.val()
                 findLoans(loansObj)
             });
+        } else {
+            setIncomesArr([])
+            setCostsArr([])
+            setLoansArr([])
         }
 
         setDateFinance({year: yearFinance, quarter: quarterFinance, month: monthFinance})
@@ -151,7 +196,6 @@ function ReportsPage({userData}) {
     useEffect(() => {
         if (formState.isSubmitSuccessful) {
             reset({year: '', quarter: '', month: '',})
-            resetForm()
         }
     }, [formState])
 
@@ -160,121 +204,131 @@ function ReportsPage({userData}) {
             <h1 className="title">Статистика</h1>
 
             <div className='reports_page__main'>
-                <Form onSubmit={handleSubmit(onSubmit)} className='reports_form'>
-                    <Form.Field>
-                        <label>Рік:</label>
-                        <DatalistInput
-                            value={yearFinance}
-                            setValue={setYearFinance}
-                            placeholder='Рік...'
-                            items={[
-                                { id: '1', value: `${+presentYear - 5}` },
-                                { id: '2', value: `${+presentYear - 4}` },
-                                { id: '3', value: `${+presentYear - 3}` },
-                                { id: '4', value: `${+presentYear - 2}` },
-                                { id: '5', value: `${+presentYear - 1}` },
-                                { id: '6', value: `${+presentYear}` },
-                                { id: '7', value: `${+presentYear + 1}` },
-                                { id: '8', value: `${+presentYear + 2}` },
-                                { id: '9', value: `${+presentYear + 3}` },
-                                { id: '10', value: `${+presentYear + 4}` },
-                                { id: '11', value: `${+presentYear + 5}` },
-                            ]}
-                            {...register('year', {
-                                required: false
-                            })}
-                        />
-                    </Form.Field>
-                    {yearFinance ? 
+                <div className='reports_page__main_form'>
+                    <Form onSubmit={handleSubmit(onSubmit)} className='reports_form'>
                         <Form.Field>
-                            <label>Квартал:</label>
+                            <label>Рік:</label>
                             <DatalistInput
-                                value={quarterFinance}
-                                setValue={setQuarterFinance}
-                                placeholder="Квартал..."
+                                value={yearFinance}
+                                setValue={setYearFinance}
+                                placeholder='Рік...'
                                 items={[
-                                    { id: '1', value: 'Перший' },
-                                    { id: '2', value: 'Другий' },
-                                    { id: '3', value: 'Третій' },
-                                    { id: '4', value: 'Четвертий' },
+                                    { id: '1', value: `${+presentYear - 5}` },
+                                    { id: '2', value: `${+presentYear - 4}` },
+                                    { id: '3', value: `${+presentYear - 3}` },
+                                    { id: '4', value: `${+presentYear - 2}` },
+                                    { id: '5', value: `${+presentYear - 1}` },
+                                    { id: '6', value: `${+presentYear}` },
+                                    { id: '7', value: `${+presentYear + 1}` },
+                                    { id: '8', value: `${+presentYear + 2}` },
+                                    { id: '9', value: `${+presentYear + 3}` },
+                                    { id: '10', value: `${+presentYear + 4}` },
+                                    { id: '11', value: `${+presentYear + 5}` },
                                 ]}
-                                {...register('quarter', {
+                                {...register('year', {
                                     required: false
                                 })}
                             />
                         </Form.Field>
-                        : null
-                    }
-                    {quarterFinance ? 
-                        <Form.Field>
-                            <label>Місяць:</label>
-                            {quarterFinance === 'Перший' ?
+                        {yearFinance ? 
+                            <Form.Field>
+                                <label>Квартал:</label>
                                 <DatalistInput
-                                    value={monthFinance}
-                                    setValue={setMonthFinance}
-                                    placeholder="Місяць..."
+                                    value={quarterFinance}
+                                    setValue={setQuarterFinance}
+                                    placeholder="Квартал..."
                                     items={[
-                                        { id: '1', value: 'Січень' },
-                                        { id: '2', value: 'Лютий' },
-                                        { id: '3', value: 'Березень' },
+                                        { id: '1', value: 'Перший' },
+                                        { id: '2', value: 'Другий' },
+                                        { id: '3', value: 'Третій' },
+                                        { id: '4', value: 'Четвертий' },
                                     ]}
-                                    {...register('month', {
+                                    {...register('quarter', {
                                         required: false
                                     })}
-                                /> : quarterFinance === 'Другий' ?
+                                />
+                            </Form.Field>
+                            : null
+                        }
+                        {quarterFinance ? 
+                            <Form.Field>
+                                <label>Місяць:</label>
+                                {quarterFinance === 'Перший' ?
                                     <DatalistInput
                                         value={monthFinance}
                                         setValue={setMonthFinance}
                                         placeholder="Місяць..."
                                         items={[
-                                            { id: '1', value: 'Квітень' },
-                                            { id: '2', value: 'Травень' },
-                                            { id: '3', value: 'Червень' },
+                                            { id: '1', value: 'Січень' },
+                                            { id: '2', value: 'Лютий' },
+                                            { id: '3', value: 'Березень' },
                                         ]}
                                         {...register('month', {
                                             required: false
                                         })}
-                                    /> : quarterFinance === 'Третій' ?
+                                    /> : quarterFinance === 'Другий' ?
                                         <DatalistInput
                                             value={monthFinance}
                                             setValue={setMonthFinance}
                                             placeholder="Місяць..."
                                             items={[
-                                                { id: '1', value: 'Липень' },
-                                                { id: '2', value: 'Серпень' },
-                                                { id: '3', value: 'Вересень' },
+                                                { id: '1', value: 'Квітень' },
+                                                { id: '2', value: 'Травень' },
+                                                { id: '3', value: 'Червень' },
                                             ]}
                                             {...register('month', {
                                                 required: false
                                             })}
-                                        /> : 
-                                        <DatalistInput
-                                            value={monthFinance}
-                                            setValue={setMonthFinance}
-                                            placeholder="Місяць..."
-                                            items={[
-                                                { id: '1', value: 'Жовтень' },
-                                                { id: '2', value: 'Листопад' },
-                                                { id: '3', value: 'Грудень' },
-                                            ]}
-                                            {...register('month', {
-                                                required: false
-                                            })}
-                                        />
-                            }
+                                        /> : quarterFinance === 'Третій' ?
+                                            <DatalistInput
+                                                value={monthFinance}
+                                                setValue={setMonthFinance}
+                                                placeholder="Місяць..."
+                                                items={[
+                                                    { id: '1', value: 'Липень' },
+                                                    { id: '2', value: 'Серпень' },
+                                                    { id: '3', value: 'Вересень' },
+                                                ]}
+                                                {...register('month', {
+                                                    required: false
+                                                })}
+                                            /> : 
+                                            <DatalistInput
+                                                value={monthFinance}
+                                                setValue={setMonthFinance}
+                                                placeholder="Місяць..."
+                                                items={[
+                                                    { id: '1', value: 'Жовтень' },
+                                                    { id: '2', value: 'Листопад' },
+                                                    { id: '3', value: 'Грудень' },
+                                                ]}
+                                                {...register('month', {
+                                                    required: false
+                                                })}
+                                            />
+                                }
+                            </Form.Field>
+                            : null
+                        }
+
+                        <Form.Field className='btns_field'>
+                            <Button className='non_active_btn' onClick={resetForm} type='reset'>Скинути</Button>
+                            <Button className='sign-in_btn' type='submit'>Підтвердити</Button>
                         </Form.Field>
-                        : null
-                    }
+                    </Form>
 
-                    <Form.Field className='btns_field'>
-                        <Button className='non_active_btn' onClick={resetForm} type='reset'>Скинути</Button>
-                        <Button className='sign-in_btn' type='submit'>Підтвердити</Button>
-                    </Form.Field>
-                </Form>
+                    <button className='receipt_btn btn'>Сформувати PDF-звіт</button>
+                </div>
+                
 
-                {incomesArr.length > 0 ? 
+                {incomesArr.length > 0 || costsArr.length > 0 || loansArr.length > 0 ? 
                     <div className='reports__container'>
-                        <h3 className='reports__container_title'>Статистика за {dateFinance.year} рік</h3>
+                        {dateFinance['year'].length > 0 && dateFinance['quarter'].length === 0  ?
+                            <h3 className='reports__container_title'>Статистика за {dateFinance.year} рік</h3> :
+                            dateFinance['year'].length > 0 && dateFinance['quarter'].length > 0 && dateFinance['month'].length === 0  ?
+                                <h3 className='reports__container_title'>Статистика за {dateFinance.year} рік, {dateFinance.quarter} квартал</h3> :
+                                <h3 className='reports__container_title'>Статистика за {dateFinance.year} рік, {dateFinance.quarter} квартал, {dateFinance.month}</h3>
+                        }
 
                         <h4 className='reports__title'>Фінанси</h4>
 

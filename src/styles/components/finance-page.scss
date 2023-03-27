@@ -169,6 +169,14 @@
                     .item_value {
                         position: relative;
                     }
+
+                    .item_panel2 {
+                        display: block !important;
+
+                        .btn {
+                            width: 82% !important;
+                        }
+                    }
                 }
             }
         }

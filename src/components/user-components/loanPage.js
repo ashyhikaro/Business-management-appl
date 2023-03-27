@@ -559,7 +559,7 @@ function LoanPage({userData}) {
                             <p className="table_title">Ми винні</p>
                             <p className="table_title">Нам винні</p>
                             <p className="table_title">Дата оплати</p>
-                            <p className="table_title">Управління</p>
+                            <p className="table_title">Панель управління</p>
                         </div>
 
                         <div className='table_rows'>
@@ -595,28 +595,41 @@ function LoanPage({userData}) {
                                     </div> 
 
                                     <div className='item_panel table_col'>
-                                        {loan.PaidOut ? 
-                                            <button className='receipt_btn btn' onClick={updateStatus} id={userData.id} itemID={loan.id}>Відкрити</button> :
-                                            <button className='receipt_btn btn' onClick={updateStatus} id={userData.id} itemID={loan.id}>Закрити</button>
-                                        }
-                                        <br />
-                                        <button 
-                                            className='edit_btn btn' 
-                                            onClick={editOpenForm} 
-                                            id={userData.id}
-                                            itemID={loan.id}
-                                        >
-                                            Редагувати
-                                        </button>
-                                        <br />
-                                        <button 
-                                            className='delete_btn btn' 
-                                            onClick={deleteItem} 
-                                            id={userData.id} 
-                                            itemID={loan.id}
-                                        >
-                                            Видалити
-                                        </button>
+                                        <div className='btns_container'>
+                                            {loan.PaidOut ? 
+                                                <button className='receipt_btn btn' onClick={updateStatus} id={userData.id} itemID={loan.id}>Відкрити</button> :
+                                                <button className='receipt_btn btn' onClick={updateStatus} id={userData.id} itemID={loan.id}>Закрити</button>
+                                            }
+                                            <br />
+                                            <button 
+                                                className='edit_btn btn' 
+                                                onClick={editOpenForm} 
+                                                id={userData.id}
+                                                itemID={loan.id}
+                                            >
+                                                Редагувати
+                                            </button>
+                                        </div>
+
+                                        <div className='btns_container'>
+                                            <button 
+                                                className='receipt_btn btn' 
+                                                onClick={() => null} 
+                                                id={userData.id} 
+                                                itemID={loan.id}
+                                            >
+                                                PDF-звіт
+                                            </button>
+                                            <br />
+                                            <button 
+                                                className='delete_btn btn' 
+                                                onClick={deleteItem} 
+                                                id={userData.id} 
+                                                itemID={loan.id}
+                                            >
+                                                Видалити
+                                            </button>
+                                        </div>
                                     </div>
 
                                 </div>)

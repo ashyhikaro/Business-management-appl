@@ -111,7 +111,7 @@
 
                         .btn {
                             border-radius: 5px;
-                            width: 50%;
+                            width: 100%;
                             font-size: 14px;
                             padding: 6px 6px;
                             border: none;
@@ -140,6 +140,11 @@
 
                     .item_value {
                         position: relative;
+                    }
+
+                    .item_panel {
+                        display: flex;
+                        gap: 10px;
                     }
                 }
             }
