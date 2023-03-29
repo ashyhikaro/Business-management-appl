@@ -61,11 +61,12 @@ function AppLogin() {
 
   async function createAccount(user_data) {
     startTransition(() => {setRegMoment(true)})
+    localStorage.setItem('user', JSON.stringify({...user_data}))
 
     try {
       await createUserWithEmailAndPassword(auth, user_data.email, user_data.password)
-      localStorage.setItem('user', JSON.stringify({...user_data}))
     } catch(error) {
+      localStorage.removeItem('user')
       console.log(error.message)
       setCustomError(error.message)
     }
@@ -168,10 +169,13 @@ function AppLogin() {
 
         } else {
           if (localStorage.getItem('user')) {
+            console.log(1)
             setUserData({...JSON.parse(localStorage.getItem('user')), id: user.uid})
           } else {
             if (!localStorage.getItem('user')) {
+              console.log(2)
               db.ref('users').child(user.uid).on('value', elem => {
+                console.log(elem.val())
                 setUserData({...elem.val(), id: user.uid})
                 navigate('/')
               })
