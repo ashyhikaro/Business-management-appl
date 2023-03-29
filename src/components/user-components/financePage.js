@@ -277,6 +277,14 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
     const generatePDF = (target) => {
         const id = target.id
         const itemId = target.getAttribute('itemID')
+
+        const today = new Date()
+        const thisDay = {
+            day: String(today.getDay()).length > 1 ? String(today.getDay()) : '0'+String(today.getDay()),
+            month: String(today.getMonth()).length > 1 ? String(today.getMonth()) : '0'+String(today.getMonth()),
+            year: String(today.getFullYear()),
+        }
+        
         let element
 
         db.ref(regime).child(id).child(itemId).once('value', (elem) => {
@@ -288,7 +296,7 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
 
         doc.setFont('CyrillicFont')
         doc.setFontSize(26);
-        doc.text(40, 50, 'Звіт про отримання прибутку')
+        regime === 'income' ? doc.text(40, 50, 'Звіт про отримання прибутку') : doc.text(40, 50, 'Звіт про витрати')
 
         const tableFont = 'CyrillicFont';
         const tableFontSize = 14;
@@ -304,7 +312,7 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
         };
 
         doc.autoTable({
-            head: [['Дата запису', 'Дата отримання', 'Назва', 'Категорія', 'Сума']],
+            head: [['Дата запису', 'Дата транзакції', 'Проєкт', 'Категорія', 'Сума']],
             body: [
               [element.DateOfCreation, element.Date, element.Project, element.Type, `${element.Value + ' ' + element.Currency}`],
             ],
@@ -313,7 +321,14 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
             bodyStyles,
         })
 
-        doc.save('document')
+        doc.setFont('CyrillicFont')
+        doc.setFontSize(14);
+        doc.text(40, 200, 'Дата:')
+
+        doc.setFont('helvetica', 'italic')
+        doc.text(80, 200, `${thisDay.day+'-'+thisDay.month+'-'+thisDay.year}`)
+
+        regime === 'income' ? doc.save('Income_report') : doc.save('Expense_report')
     }
     
     return (

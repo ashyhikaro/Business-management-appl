@@ -1,10 +1,16 @@
 import '../../styles/components/reports-page.scss'
 import '../../styles/forms/form.scss';
 import 'react-datalist-input/dist/styles.css';
+import CyrillicFont from '../../fonts/FreeSans.ttf'
+
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable'
+
 import DatalistInput from 'react-datalist-input';
 import { Form, Button } from 'semantic-ui-react';
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from 'react';
+
 import { db } from '../..';
 
 function ReportsPage({userData}) {
@@ -16,10 +22,15 @@ function ReportsPage({userData}) {
     const [ quarterFinance, setQuarterFinance ] = useState('');
     const [ monthFinance, setMonthFinance ] = useState('');
     const [ dateFinance, setDateFinance ] = useState('');
+    const [ reportType, setReportType ] = useState('');
 
     const [ incomesArr, setIncomesArr] = useState([]);
     const [ costsArr, setCostsArr] = useState([]);
     const [ loansArr, setLoansArr] = useState([]);
+
+    const [ incomesPDFArr, setIncomesPDFArr] = useState([]);
+    const [ costsPDFArr, setCostsPDFArr] = useState([]);
+    const [ loansPDFArr, setLoansPDFArr] = useState([]);
 
     function checkFinances(objFinance) {
         let financeArr = []
@@ -76,6 +87,8 @@ function ReportsPage({userData}) {
     function findFinances(type, objFinance) {
         let financeArr = checkFinances(objFinance)
 
+        type === 'income' ? setIncomesPDFArr(financeArr) : setCostsPDFArr(financeArr)
+
         const sumByType = financeArr.reduce((acc, cur) => {
             if (acc[cur.Type]) {
               acc[cur.Type] += parseFloat(cur.Value);
@@ -107,6 +120,8 @@ function ReportsPage({userData}) {
     function findLoans(objFinance) {
         let financeArr = checkFinances(objFinance)
         let loansPaidOut = [], loansNotPaidOut = []
+
+        setLoansPDFArr(financeArr)
 
         financeArr.forEach(item => {
             item.PaidOut ? loansPaidOut.push(item) : loansNotPaidOut.push(item)
@@ -166,6 +181,235 @@ function ReportsPage({userData}) {
         setYearFinance('')
         setQuarterFinance('')
         setMonthFinance('')
+    }
+    
+    const openReportForm = () => {
+        setReportType('')
+        document.querySelector('.report_form').classList.toggle('hiden')
+    }
+
+    const generatePDF = () => {
+        const today = new Date()
+        const thisDay = {
+            day: String(today.getDay()).length > 1 ? String(today.getDay()) : '0'+String(today.getDay()),
+            month: String(today.getMonth()).length > 1 ? String(today.getMonth()) : '0'+String(today.getMonth()),
+            year: String(today.getFullYear()),
+        }
+        
+        let summaryArr = []
+
+        const doc = new jsPDF('landscape', 'pt', 'a4')
+        doc.addFont(CyrillicFont, 'CyrillicFont', 'normal');
+
+        const tableFont = 'CyrillicFont';
+        const tableFontSize = 14;
+        const tableFontSizeVal = 12;
+
+        const headStyles = {
+            font: tableFont,
+            fontSize: tableFontSize,
+        };
+        const bodyStyles = {
+            font: tableFont,
+            fontSize: tableFontSizeVal,
+        };
+
+        if (reportType === 'Загальний') {
+            //Incomes
+
+            summaryArr = [...incomesArr]
+            let bodyArr = []
+
+            let sumBody = []
+            summaryArr.forEach(item => sumBody.push([item.type, `${item.value + ' UAH'}`]))
+
+            incomesPDFArr.forEach(item => bodyArr.push([item.DateOfCreation, item.Date, item.Project, item.Type, `${item.Value + ' ' + item.Currency}`]))
+
+            doc.setFont('CyrillicFont')
+            doc.setFontSize(26);
+            doc.text(40, 50, 'Загальний звіт по фінансам')
+
+            if (bodyArr.length > 0) {
+                doc.autoTable({
+                    head: [['Дата запису', 'Дата транзакції', 'Проєкт', 'Категорія', 'Сума']],
+                    body: bodyArr,
+                    startY: 80,
+                    headStyles,
+                    bodyStyles,
+                })
+    
+                doc.autoTable({
+                    head: [['Категорія', 'Сума']],
+                    body: sumBody,
+                    headStyles,
+                    bodyStyles,
+                })
+            }
+
+            //Expenses
+            
+            doc.setFont('CyrillicFont')
+            doc.setFontSize(20);
+
+            summaryArr = [...costsArr]
+            bodyArr = []
+
+            sumBody = []
+            summaryArr.forEach(item => sumBody.push([item.type, `${item.value + ' UAH'}`]))
+
+            costsPDFArr.forEach(item => bodyArr.push([item.DateOfCreation, item.Date, item.Project, item.Type, `${item.Value + ' ' + item.Currency}`]))
+
+            if (bodyArr.length > 0) {
+                doc.autoTable({
+                    head: [['Дата запису', 'Дата транзакції', 'Проєкт', 'Категорія', 'Сума']],
+                    body: bodyArr,
+                    headStyles,
+                    bodyStyles,
+                })
+    
+                doc.autoTable({
+                    head: [['Категорія', 'Сума']],
+                    body: sumBody,
+                    headStyles,
+                    bodyStyles,
+                })
+            }
+
+            //Loans
+
+            summaryArr = [...loansArr]
+
+            bodyArr = []
+
+            let sumBodyPaidOut = []
+            let sumBodyNotPaidOut = []
+            summaryArr[0].forEach(item => sumBodyPaidOut.push([item.type, `${item.value + ' UAH'}`, "Закрита"]))
+            summaryArr[1].forEach(item => sumBodyNotPaidOut.push([item.type, `${item.value + ' UAH'}`, "Відкрита"]))
+
+            loansPDFArr.forEach(item => bodyArr.push([item.DateOfCreation, item.Name, item.Type, `${item.Value + ' ' + item.Currency}`, item.Date, `${item.PaidOut ? 'Закрита' : 'Відкрита'}`]))
+
+            if (bodyArr.length > 0) {
+                doc.autoTable({
+                    head: [['Дата запису', "Ім'я / компанія", 'Тип позики', 'Сума', 'Дата виплати', 'Статус']],
+                    body: bodyArr,
+                    headStyles,
+                    bodyStyles,
+                })
+    
+                doc.autoTable({
+                    head: [['Тип позики', 'Сума', 'Статус']],
+                    body: sumBodyPaidOut,
+                    headStyles,
+                    bodyStyles,
+                })
+    
+                doc.autoTable({
+                    head: [['Тип позики', 'Сума', 'Статус']],
+                    body: sumBodyNotPaidOut,
+                    headStyles,
+                    bodyStyles,
+                })
+            }
+
+            doc.save('General_report')
+        } else if (reportType === 'Прибутки') {
+            summaryArr = [...incomesArr]
+            let bodyArr = []
+
+            let sumBody = []
+            summaryArr.forEach(item => sumBody.push([item.type, `${item.value + ' UAH'}`]))
+
+            incomesPDFArr.forEach(item => bodyArr.push([item.DateOfCreation, item.Date, item.Project, item.Type, `${item.Value + ' ' + item.Currency}`]))
+
+            doc.setFont('CyrillicFont')
+            doc.setFontSize(26);
+            doc.text(40, 50, 'Звіт про прибутки')
+
+            doc.autoTable({
+                head: [['Дата запису', 'Дата транзакції', 'Проєкт', 'Категорія', 'Сума']],
+                body: bodyArr,
+                startY: 80,
+                headStyles,
+                bodyStyles,
+            })
+
+            doc.autoTable({
+                head: [['Категорія', 'Сума']],
+                body: sumBody,
+                headStyles,
+                bodyStyles,
+            })
+
+            doc.save('Income_report')
+        } else if (reportType === 'Витрати') {
+            summaryArr = [...costsArr]
+            let bodyArr = []
+
+            let sumBody = []
+            summaryArr.forEach(item => sumBody.push([item.type, `${item.value + ' UAH'}`]))
+
+            costsPDFArr.forEach(item => bodyArr.push([item.DateOfCreation, item.Date, item.Project, item.Type, `${item.Value + ' ' + item.Currency}`]))
+
+            doc.setFont('CyrillicFont')
+            doc.setFontSize(26);
+            doc.text(40, 50, 'Звіт про витрати')
+
+            doc.autoTable({
+                head: [['Дата запису', 'Дата транзакції', 'Проєкт', 'Категорія', 'Сума']],
+                body: bodyArr,
+                startY: 80,
+                headStyles,
+                bodyStyles,
+            })
+
+            doc.autoTable({
+                head: [['Категорія', 'Сума']],
+                body: sumBody,
+                headStyles,
+                bodyStyles,
+            })
+
+            doc.save('Expense_report')
+        } else if (reportType === 'Позики') {
+            summaryArr = [...loansArr]
+
+            let bodyArr = []
+
+            let sumBodyPaidOut = []
+            let sumBodyNotPaidOut = []
+            summaryArr[0].forEach(item => sumBodyPaidOut.push([item.type, `${item.value + ' UAH'}`, "Закрита"]))
+            summaryArr[1].forEach(item => sumBodyNotPaidOut.push([item.type, `${item.value + ' UAH'}`, "Відкрита"]))
+
+            loansPDFArr.forEach(item => bodyArr.push([item.DateOfCreation, item.Name, item.Type, `${item.Value + ' ' + item.Currency}`, item.Date, `${item.PaidOut ? 'Закрита' : 'Відкрита'}`]))
+
+            doc.setFont('CyrillicFont')
+            doc.setFontSize(26);
+            doc.text(40, 50, 'Звіт про позики')
+
+            doc.autoTable({
+                head: [['Дата запису', "Ім'я / компанія", 'Тип позики', 'Сума', 'Дата виплати', 'Статус']],
+                body: bodyArr,
+                startY: 80,
+                headStyles,
+                bodyStyles,
+            })
+
+            doc.autoTable({
+                head: [['Тип позики', 'Сума', 'Статус']],
+                body: sumBodyPaidOut,
+                headStyles,
+                bodyStyles,
+            })
+
+            doc.autoTable({
+                head: [['Тип позики', 'Сума', 'Статус']],
+                body: sumBodyNotPaidOut,
+                headStyles,
+                bodyStyles,
+            })
+
+            doc.save('Loan_report')
+        }
     }
 
     const onSubmit = (data) => {
@@ -317,7 +561,32 @@ function ReportsPage({userData}) {
                         </Form.Field>
                     </Form>
 
-                    <button className='receipt_btn btn'>Сформувати PDF-звіт</button>
+                    <div className='report_form__container'>
+                        <button className='receipt_btn btn' onClick={openReportForm}>Сформувати PDF-звіт</button>
+
+                        <Form className='report_form hiden'>
+                            <Form.Field>
+                                <label>Оберіть тип звіту:</label>
+                                <DatalistInput
+                                value={reportType}
+                                setValue={setReportType}
+                                placeholder="Тип..."
+                                items={[
+                                    { id: '1', value: 'Загальний' },
+                                    { id: '2', value: 'Прибутки' },
+                                    { id: '3', value: 'Витрати' },
+                                    { id: '4', value: 'Позики' },
+                                ]}
+                            />
+                            </Form.Field>
+                            <Form.Field className='btns_field'>
+                                <Button className='non_active_btn' onClick={openReportForm}>Назад</Button>
+                                <Button className='sign-in_btn' onClick={generatePDF}>Підтвердити</Button>
+                            </Form.Field>
+                        </Form>
+                    </div>
+                    
+
                 </div>
                 
 

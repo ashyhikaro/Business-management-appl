@@ -1,5 +1,9 @@
 import '../../styles/components/loan-page.scss'
 import '../../styles/pagination.scss'
+import CyrillicFont from '../../fonts/FreeSans.ttf'
+
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable'
 
 import DatalistInput from 'react-datalist-input';
 import { useEffect, useState, lazy } from "react";
@@ -508,6 +512,63 @@ function LoanPage({userData}) {
         setLoans(sortedArr)
     }
 
+    const generatePDF = (target) => {
+        const id = target.id
+        const itemId = target.getAttribute('itemID')
+
+        const today = new Date()
+        const thisDay = {
+            day: String(today.getDay()).length > 1 ? String(today.getDay()) : '0'+String(today.getDay()),
+            month: String(today.getMonth()).length > 1 ? String(today.getMonth()) : '0'+String(today.getMonth()),
+            year: String(today.getFullYear()),
+        }
+        
+        let element
+
+        db.ref('loans').child(id).child(itemId).once('value', (elem) => {
+            element = elem.val()    
+        })
+    
+        const doc = new jsPDF('landscape', 'pt', 'a4')
+        doc.addFont(CyrillicFont, 'CyrillicFont', 'normal');
+
+        doc.setFont('CyrillicFont')
+        doc.setFontSize(26);
+        doc.text(40, 50, 'Звіт про позику')
+
+        const tableFont = 'CyrillicFont';
+        const tableFontSize = 14;
+        const tableFontSizeVal = 12;
+
+        const headStyles = {
+            font: tableFont,
+            fontSize: tableFontSize,
+        };
+        const bodyStyles = {
+            font: tableFont,
+            fontSize: tableFontSizeVal,
+        };
+
+        doc.autoTable({
+            head: [['Дата запису', "Ім'я / компанія", 'Тип позики', 'Сума', 'Дата виплати', 'Статус']],
+            body: [
+              [element.DateOfCreation, element.Name, element.Type, `${element.Value + ' ' + element.Currency}`, element.Date, `${element.PaidOut ? 'Закрита' : 'Відкрита'}`],
+            ],
+            startY: 80,
+            headStyles,
+            bodyStyles,
+        })
+
+        doc.setFont('CyrillicFont')
+        doc.setFontSize(14);
+        doc.text(40, 200, 'Дата:')
+
+        doc.setFont('helvetica', 'italic')
+        doc.text(80, 200, `${thisDay.day+'-'+thisDay.month+'-'+thisDay.year}`)
+
+        doc.save('Loan_report')
+    }
+
     useEffect(() => {
         db.ref('loans').child(userData.id).on('value', elem => {
             let obj = elem.val()
@@ -614,7 +675,7 @@ function LoanPage({userData}) {
                                         <div className='btns_container'>
                                             <button 
                                                 className='receipt_btn btn' 
-                                                onClick={() => null} 
+                                                onClick={(e) => generatePDF(e.target)} 
                                                 id={userData.id} 
                                                 itemID={loan.id}
                                             >
