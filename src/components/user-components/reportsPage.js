@@ -21,7 +21,7 @@ function ReportsPage({userData}) {
     const [ yearFinance, setYearFinance ] = useState();
     const [ quarterFinance, setQuarterFinance ] = useState('');
     const [ monthFinance, setMonthFinance ] = useState('');
-    const [ dateFinance, setDateFinance ] = useState('');
+    const [ dateFinance, setDateFinance ] = useState();
     const [ reportType, setReportType ] = useState('');
 
     const [ incomesArr, setIncomesArr] = useState([]);
@@ -585,19 +585,16 @@ function ReportsPage({userData}) {
                             </Form.Field>
                         </Form>
                     </div>
-                    
-
                 </div>
-                
 
                 {incomesArr.length > 0 || costsArr.length > 0 || loansArr.length > 0 ? 
                     <div className='reports__container'>
-                        {dateFinance['year'].length > 0 && dateFinance['quarter'].length === 0  ?
+                        {dateFinance['year'] ? dateFinance['year'].length > 0 && dateFinance['quarter'].length === 0  ?
                             <h3 className='reports__container_title'>Статистика за {dateFinance.year} рік</h3> :
                             dateFinance['year'].length > 0 && dateFinance['quarter'].length > 0 && dateFinance['month'].length === 0  ?
                                 <h3 className='reports__container_title'>Статистика за {dateFinance.year} рік, {dateFinance.quarter} квартал</h3> :
                                 <h3 className='reports__container_title'>Статистика за {dateFinance.year} рік, {dateFinance.quarter} квартал, {dateFinance.month}</h3>
-                        }
+                        : <h3 className='reports__container_title'>Статистика</h3>}
 
                         <h4 className='reports__title'>Фінанси</h4>
 
@@ -632,7 +629,7 @@ function ReportsPage({userData}) {
                                         return <p className='report_item' key={index}>{item.type !== 'Ми винні' ? 'Отримали' : 'Віддали'}: {item.value} ₴</p>}
                                     ) : null}
                                 </div>
-                                <p className='report_item dif'>Різниця: {loansArr[0].length > 0 || loansArr[1].length > 0  ? (loansArr[0][0].value && loansArr[0][1].value) ? loansArr[0][1].value - loansArr[0][0].value : (loansArr[0][0].value && !loansArr[0][1].value) ? loansArr[0][0].value : loansArr[0][1].value : 0} ₴</p>
+                                <p className='report_item dif'>Різниця: {(loansArr && loansArr[0] && loansArr[1] && loansArr[0][0] && loansArr[0][1] && loansArr[1][0] && loansArr[1][1]) && (loansArr[0].length > 0 || loansArr[1].length > 0)  ? (loansArr[0][0].value && loansArr[0][1].value) ? loansArr[0][1].value - loansArr[0][0].value : (loansArr[0][0].value && !loansArr[0][1].value) ? loansArr[0][0].value : loansArr[0][1].value : 0} ₴</p>
                             </div>
                             <div className='report_container'>
                                 <div>
@@ -641,7 +638,7 @@ function ReportsPage({userData}) {
                                         return <p className='report_item' key={index}>{item.type}: {item.value} ₴</p>}
                                     ) : null}
                                 </div>
-                                <p className='report_item dif'>Різниця: {loansArr[0].length > 0 || loansArr[1].length > 0  ? (loansArr[1][0].value && loansArr[1][1].value) ? loansArr[1][1].value - loansArr[1][0].value : (loansArr[1][0].value && !loansArr[1][1].value) ? loansArr[1][0].value : loansArr[1][1].value : 0} ₴</p>
+                                <p className='report_item dif'>Різниця: {(loansArr && loansArr[0] && loansArr[1] && loansArr[0][0] && loansArr[0][1] && loansArr[1][0] && loansArr[1][1]) && (loansArr[0].length > 0 || loansArr[1].length > 0)  ? (loansArr[1][0].value && loansArr[1][1].value) ? loansArr[1][1].value - loansArr[1][0].value : (loansArr[1][0].value && !loansArr[1][1].value) ? loansArr[1][0].value : loansArr[1][1].value : 0} ₴</p>
                             </div>
                         </div>
                     </div>

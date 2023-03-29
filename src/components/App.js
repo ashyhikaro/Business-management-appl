@@ -16,6 +16,7 @@ const FinancePage = lazy(() => import('./user-components/financePage'))
 const CashFlowPage = lazy(() => import('./user-components/cashFlowPage'))
 const LoanPage = lazy(() => import('./user-components/loanPage'))
 const ReportsPage = lazy(() => import('./user-components/reportsPage'))
+const ResetPasswordPage = lazy(() => import('./autho-reg/resetPasswordPage'))
 
 function AppLogin() {
   const navigate = useNavigate()
@@ -59,11 +60,11 @@ function AppLogin() {
   }
 
   async function createAccount(user_data) {
-    localStorage.setItem('user', JSON.stringify({...user_data}))
     startTransition(() => {setRegMoment(true)})
 
     try {
       await createUserWithEmailAndPassword(auth, user_data.email, user_data.password)
+      localStorage.setItem('user', JSON.stringify({...user_data}))
     } catch(error) {
       console.log(error.message)
       setCustomError(error.message)
@@ -200,6 +201,12 @@ function AppLogin() {
                 />}
               />
 
+              <Route path="/resset-password" element={
+                <ResetPasswordPage
+                  auth={auth}
+                />}
+              />
+
               <Route path="/" element={
                 userData ? 
                 <HomePage 
@@ -211,6 +218,7 @@ function AppLogin() {
                           authorAccount={authorAccount}
                           signInWithGoogle={signInWithGoogle}
                           customError={customError}
+                          setCustomError={setCustomError}
                 />}
               />
 

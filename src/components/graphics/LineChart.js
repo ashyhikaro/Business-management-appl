@@ -5,11 +5,11 @@ import { useEffect, useState } from 'react';
 function LineChart({title, finances}) {
 
     const [chartData, setChartData] = useState({
-        labels: finances.map((data) => data.day), 
+        labels: finances ? finances.map((data) => data.day) : [], 
         datasets: [
             {
                 label: "Users Gained",
-                data: finances.map((data) => data.userGain - data.userLost),
+                data: finances ? finances.map((data) => data.userGain - data.userLost) : [],
                 backgroundColor: [
                     "rgba(75,192,192,1)",
                     "#ecf0f1",
@@ -25,11 +25,11 @@ function LineChart({title, finances}) {
 
     useEffect(() => {
         setChartData({
-            labels: finances.map((data) => data.day).sort((a, b) => a - b), 
+            labels: finances ? finances.map((data) => data.day).sort((a, b) => a - b) : [], 
             datasets: [
                 {
                     label: title === 'Прибутки' ? "Отримано" : title === 'Витрати' ? "Витрачено" : "Кошти",
-                    data: finances.sort((item1, item2) => item1.day - item2.day).map((data) => data.userGain - data.userLost),
+                    data: finances ? finances.sort((item1, item2) => item1.day - item2.day).map((data) => data.userGain - data.userLost) : [],
                     backgroundColor: [
                         "rgba(75,192,192,1)",
                         "#ecf0f1",

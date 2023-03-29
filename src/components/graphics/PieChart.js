@@ -3,7 +3,7 @@ import { Pie } from "react-chartjs-2";
 
 function PieChart({title, financeArr, financeType}){
 
-    let dataArr = [...financeArr]
+    let dataArr = financeArr ? [...financeArr] : []
     let labels = []
     let values = []
 

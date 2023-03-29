@@ -1,11 +1,12 @@
 import '../../styles/forms/form.scss'
 import '../../styles/forms/log-page.scss'
 import google from '../../img/google_icon.png'
+
 import { Form, Button } from 'semantic-ui-react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-function AuthorizationPage({authorAccount, signInWithGoogle, customError}) {
+function AuthorizationPage({authorAccount, signInWithGoogle, customError, setCustomError}) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate()
 
@@ -16,9 +17,8 @@ function AuthorizationPage({authorAccount, signInWithGoogle, customError}) {
     return (
         <div className='login_page'>
             <div className="form_block login_block" >
-                {customError ? <p className='error_message'>{customError}</p> : null}
-                <br />
                 <Form onSubmit={handleSubmit(onSubmit)}>
+                    {customError ? <p className='error_message' style={{textAlign: 'center'}}>{customError}</p> : null}
                     <h1>Авторизація</h1>
                     <Form.Field>
                         <label>Email:</label>
@@ -41,9 +41,19 @@ function AuthorizationPage({authorAccount, signInWithGoogle, customError}) {
                         />
                         {errors.password && <p className='error_message'>*Невірний пароль або email</p>}
                     </Form.Field>
-                    
+
+                    <Button 
+                        className='reset_pass_btn'
+                        type='button'
+                        onClick={() => {
+                            setCustomError('')
+                            navigate('/resset-password')
+                        }}
+                    >Забув пароль</Button>
+
                     <Form.Field className='btns_field'>
                         <Button className='sign_btn non_active_btn' type='button' onClick={(e) => {
+                                setCustomError('')
                                 navigate('/registration')
                             }}
                         >Реєстрація</Button>

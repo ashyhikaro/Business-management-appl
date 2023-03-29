@@ -3,18 +3,22 @@ import { Bar } from "react-chartjs-2";
 
 function BarChart({title, financeArr, financeType, barType}){
 
-    let dataArr = [...financeArr].sort((a, b) => a.day - b.day)
     let labels = []
     let values = []
 
-    barType === 'year' ? labels = ["Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"]
-    : dataArr.forEach(item => {
-        labels.push(item.day)
-    })
+    if (financeArr) {
+        let dataArr = [...financeArr].sort((a, b) => a.day - b.day)
 
-    for (let key in dataArr) {
-        financeType === 'incomes' ? values.push(dataArr[key].userGain) :
-        values.push(dataArr[key].userLost)
+        barType === 'year' ? labels = ["Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"]
+        : dataArr.forEach(item => {
+            labels.push(item.day)
+        })
+
+        for (let key in dataArr) {
+            financeType === 'incomes' ? values.push(dataArr[key].userGain) :
+            values.push(dataArr[key].userLost)
+        }
+
     }
 
     const chartData = {
@@ -22,7 +26,7 @@ function BarChart({title, financeArr, financeType, barType}){
         datasets: [
             {
                 label: financeType === 'incomes' ? 'Отримано' : 'Витрачено',
-                data: values,
+                data: values ? values : [],
                 backgroundColor: financeType === 'incomes' ? [
                     'rgba(240, 128, 128, 0.2)',
                     'rgba(250, 128, 114, 0.2)',
@@ -81,6 +85,8 @@ function BarChart({title, financeArr, financeType, barType}){
             }
         ]
     };
+    
+    
 
     return (
         <div className="chart-container">

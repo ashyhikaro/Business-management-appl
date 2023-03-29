@@ -3,7 +3,7 @@ import { PolarArea } from "react-chartjs-2";
 
 function PolarAreaChart({title, financeArr, financeType}){
 
-    let dataArr = [...financeArr]
+    let dataArr = financeArr ? [...financeArr] : []
     let labels = []
     let values = []
 

@@ -1,12 +1,13 @@
 import '../../styles/forms/form.scss'
 import '../../styles/forms/reg-page.scss'
+
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { Form, Button } from 'semantic-ui-react';
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from 'react';
 
-function RegistrationPage({createAccount, customError}) {
+function RegistrationPage({createAccount, customError, setCustomError}) {
         const { register, handleSubmit, setError, formState: { errors } } = useForm();
         const [regionInfo, setRegion] = useState({ country: '', region: ''})
         const navigate = useNavigate()
@@ -34,9 +35,8 @@ function RegistrationPage({createAccount, customError}) {
         return (
                 <div className='registration_page'>
                         <div className="form_block">
-                                {customError ? <p className='error_message'>{customError}</p> : null}
-                                <br />
                                 <Form onSubmit={handleSubmit(onSubmit)}>
+                                        {customError ? <p className='error_message' style={{textAlign: 'center'}}>{customError}</p> : null}
                                         <h1>Реєстрація</h1>
                                         <div className='reg_block'>
                                                 <Form.Field className='field_block'>
@@ -142,6 +142,7 @@ function RegistrationPage({createAccount, customError}) {
                                         <Form.Field className='btns_field'>
                                                 <Button className='non_active_btn sign_btn' type='button' onClick={(e) => {
                                                         navigate('/')
+                                                        setCustomError('')
                                                 }}>Авторизація</Button>
                                                 <Button className='sign-in_btn sign_btn' type='submit'>Зареєструватись</Button>
                                         </Form.Field>

@@ -27,3 +27,14 @@
         }
     }
 }
+
+.reset_pass_btn {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+}
+
+.reset_pass_btn:hover {
+    color: rgb(80, 80, 80);
+    text-decoration: underline;
+}

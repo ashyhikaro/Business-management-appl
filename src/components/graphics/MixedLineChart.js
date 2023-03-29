@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 
 function MixedLineChart({incomes, costs}) {
 
-    const labelsArr = incomes.map((data) => data.day).concat(costs.map((data) => data.day)).sort((a, b) => a - b)
+    const labelsArr = incomes && costs ? incomes.map((data) => data.day).concat(costs.map((data) => data.day)).sort((a, b) => a - b) :
+        incomes && !costs ? incomes.map((data) => data.day) :
+            !incomes && costs ? costs.map((data) => data.day) : []
 
-    let incomesArr = incomes.sort((item1, item2) => item1.day - item2.day)
-    let costsArr = costs.sort((item1, item2) => item1.day - item2.day)
+    let incomesArr = incomes ? incomes.sort((item1, item2) => item1.day - item2.day) : []
+    let costsArr = costs ? costs.sort((item1, item2) => item1.day - item2.day) : []
 
     function sortArray(arrayFinance) {
         let arr = arrayFinance
@@ -21,8 +23,8 @@ function MixedLineChart({incomes, costs}) {
         return arr
     }
 
-    let incomesArrSorted = sortArray(incomesArr).sort((item1, item2) => item1.day - item2.day).map((data) => data.userGain)
-    let costsArrSorted = sortArray(costsArr).sort((item1, item2) => item1.day - item2.day).map((data) => data.userLost)
+    let incomesArrSorted = incomes ? sortArray(incomesArr).sort((item1, item2) => item1.day - item2.day).map((data) => data.userGain) : []
+    let costsArrSorted = costs ? sortArray(costsArr).sort((item1, item2) => item1.day - item2.day).map((data) => data.userLost) : []
 
     if (labelsArr.length > incomesArrSorted.length) {
         let riznucya = labelsArr.length - incomesArrSorted.length
