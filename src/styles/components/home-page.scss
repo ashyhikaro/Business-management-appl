@@ -3,14 +3,11 @@
         border-bottom: 1px solid rgb(154, 154, 154);
         padding-bottom: 10px;
 
-        .title {
-            margin-bottom: 5px !important;
-            border: none !important;
-            padding-bottom: 0 !important;
-        }
-
         .today_date {
-            font-size: 20px;
+            font-size: 24px;
+            margin-bottom: 5px;
+            border: none;
+            padding-bottom: 0;
         }
     }
 
@@ -91,8 +88,6 @@
 
                     canvas {
                         margin-top: -50px;
-                        width: 200px !important;
-                        height: 200px !important;
                     }
                 }
 
@@ -110,4 +105,51 @@
 
 .costValue {
     color: rgb(158, 37, 37);
+}
+
+@media (max-width: 1100px) {
+    .home_page {
+        .home__main {
+            display: block;
+
+            .main_finance {
+                border-right: none;
+                height: auto;
+                
+                .finance__container {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    gap: 20px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 760px) {
+    .home_page {
+        .home__main {
+            .main_statistic {
+                display: block;
+    
+                .line_chart_finances {
+                    width: 100%;
+                }
+    
+                .statistic__pies {
+                    width: 100%;
+
+                    .pies__container {
+                        display: flex;
+
+                        .chart-container {
+                            width: 50%;
+                            margin: auto;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

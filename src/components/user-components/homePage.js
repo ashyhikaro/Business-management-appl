@@ -209,33 +209,37 @@ function MainPage({userData}) {
     return (
         <div className="home_page page">
             <header className="home__header">
-                <h2 className="title">Привіт, {userData.firstname}</h2>
-                <p className="today_date">{dayOfWeek}, {dayOfMonth} {month}</p>
+                <h2 className="today_date">{dayOfWeek}, {dayOfMonth} {month}</h2>
             </header>
             
             <main className="home__main">
                 <div className="main_finance">
                     <div className='finance__container'>
-                        <h2 className='main_finance__title'>Фінанси компанії</h2>
+                        <div>
+                            <h2 className='main_finance__title'>Фінанси компанії</h2>
 
-                        <div className='money_container'>
-                            <p className='container__title'>Прибутки</p>
-                            <p className='incomeValue'>{incomes} UAH</p>
+                            <div className='money_container'>
+                                <p className='container__title'>Прибутки</p>
+                                <p className='incomeValue'>{incomes} UAH</p>
+                            </div>
+                            <div className='money_container'>
+                                <p className='container__title'>Витрати</p>
+                                <p className='costValue'>{expenses} UAH</p>
+                            </div>
                         </div>
-                        <div className='money_container'>
-                            <p className='container__title'>Витрати</p>
-                            <p className='costValue'>{expenses} UAH</p>
-                        </div>
+                        
 
-                        <h2 className='main_finance__title'>Позики компанії</h2>
+                        <div>
+                            <h2 className='main_finance__title'>Позики компанії</h2>
 
-                        <div className='money_container'>
-                            <p className='container__title'>Нам винні</p>
-                            <p className='incomeValue'>{loansIn} UAH</p>
-                        </div>
-                        <div className='money_container'>
-                            <p className='container__title'>Ми винні</p>
-                            <p className='costValue'>{loansOut} UAH</p>
+                            <div className='money_container'>
+                                <p className='container__title'>Нам винні</p>
+                                <p className='incomeValue'>{loansIn} UAH</p>
+                            </div>
+                            <div className='money_container'>
+                                <p className='container__title'>Ми винні</p>
+                                <p className='costValue'>{loansOut} UAH</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -243,8 +247,10 @@ function MainPage({userData}) {
                     <LineChart title='Рух коштів за поточний місяць' finances={finances}/>
                     <div className='statistic__pies'>
                         <h2 style={{textAlign: 'center'}}>По категоріям</h2>
-                        <PieChart title='Прибутки' financeArr={incomesArr} financeType={'incomes'}/>
-                        <PieChart title='Витрати' financeArr={costsArr} financeType={'costs'}/>
+                        <div className='pies__container'>
+                            <PieChart title='Прибутки' financeArr={incomesArr} financeType={'incomes'}/>
+                            <PieChart title='Витрати' financeArr={costsArr} financeType={'costs'}/>
+                        </div>
                     </div>
                 </div>
             </main>
