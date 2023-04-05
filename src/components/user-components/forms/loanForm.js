@@ -46,7 +46,7 @@ function LoanForm({userData, openForm, mode, usersNoteId}) {
             if (!value) {
                 newDBObject = {
                     ...newDBObject,
-                    value: 'Ми винні',
+                    value: 'Дебет',
                 }
             } else {
                 newDBObject = {
@@ -117,7 +117,7 @@ function LoanForm({userData, openForm, mode, usersNoteId}) {
     return (
         <>  
             <Form onSubmit={handleSubmit(onSubmit)} className='finance__form form_hiden'>
-                <h2>{mode === 'create' ? 'Додати' : 'Редагувати'} позику</h2>
+                <h2>{mode === 'create' ? 'Додати' : 'Редагувати'} депозит</h2>
 
                 <Form.Field>
                     <label>Ім'я / компанія:</label>
@@ -151,10 +151,10 @@ function LoanForm({userData, openForm, mode, usersNoteId}) {
                             style={{marginTop: '8px'}}
                             value={value}
                             setValue={setValue}
-                            placeholder="Ми винні"
+                            placeholder="Дебет"
                             items={[
-                                {id: 'In', value: 'Ми винні'},
-                                {id: 'Out', value: 'Нам винні'},
+                                {id: 'In', value: 'Дебет'},
+                                {id: 'Out', value: 'Кредит'},
                             ]}
                         /> :
                         <DatalistInput
@@ -163,8 +163,8 @@ function LoanForm({userData, openForm, mode, usersNoteId}) {
                             setValue={setValue}
                             placeholder={oldNote.Type}
                             items={[
-                                {id: 'In', value: 'Ми винні'},
-                                {id: 'Out', value: 'Нам винні'},
+                                {id: 'In', value: 'Дебет'},
+                                {id: 'Out', value: 'Кредит'},
                             ]}
                         />
                     }

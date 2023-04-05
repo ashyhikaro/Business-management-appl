@@ -108,6 +108,10 @@
 }
 
 @media (max-width: 1100px) {
+    .main_finance__title {
+        font-size: 24px;
+    }
+
     .home_page {
         .home__main {
             display: block;
@@ -115,6 +119,7 @@
             .main_finance {
                 border-right: none;
                 height: auto;
+                padding-right: 0;
                 
                 .finance__container {
                     width: 100%;
@@ -128,10 +133,60 @@
 }
 
 @media (max-width: 760px) {
+    .main_finance__title {
+        font-size: 20px;
+    }
+
+    .money_container {
+        .container__title, .costValue, .incomeValue {
+            font-size: 16px !important;
+        }
+    }
+
+
     .home_page {
         .home__main {
             .main_statistic {
                 display: block;
+    
+                .line_chart_finances {
+                    width: 100%;
+                }
+    
+                .statistic__pies {
+                    width: 100%;
+
+                    .pies__container {
+                        display: flex;
+
+                        .chart-container {
+                            width: 50%;
+                            margin: auto;
+                        }
+                    }
+                }
+            }
+
+            .main_statistic {
+                .line_chart_finances {
+                    h2 {
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 760px) {
+    .home_page {
+        .home__main {
+            .main_statistic {
+                display: block;
+
+                h2 {
+                    font-size: 18px;
+                }
     
                 .line_chart_finances {
                     width: 100%;

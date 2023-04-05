@@ -225,9 +225,9 @@ function SortPanelFinance({
                     <DatalistInput
                         value={category}
                         setValue={setCategory}
-                        placeholder="За товар/послугу"
+                        placeholder="За товар / послугу"
                         items={[
-                            {id: 'Payment', value: 'За товар/послугу'},
+                            {id: 'Payment', value: 'За товар / послугу'},
                             {id: 'Prepayment', value: 'Передоплата'},
                             {id: 'Another', value: 'Інші надходження'},
                         ]}
@@ -235,9 +235,9 @@ function SortPanelFinance({
                     <DatalistInput
                         value={category}
                         setValue={setCategory}
-                        placeholder="Телефон/інтернет"
+                        placeholder="Телефон / інтернет"
                         items={[
-                            {id: 'Connection', value: 'Телефон/інтернет'},
+                            {id: 'Connection', value: 'Телефон / інтернет'},
                             {id: 'Suppliers', value: 'Оплата постачальникам'},
                             {id: 'Rent', value: 'Оренда'},
                             {id: 'Taxes', value: 'Податки'},
@@ -342,7 +342,7 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
                         <p className="table_title">Сума</p>
                         <p className="table_title">Категорія</p>
                         <p className="table_title">Проєкт</p>
-                        <p className="table_title">Панель управління</p>
+                        <p className="table_title">Панель керування</p>
                     </div>
                     <div className='table_rows'>
                         {currentItems.map((income, index) => 

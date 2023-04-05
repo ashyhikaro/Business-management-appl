@@ -224,19 +224,20 @@ function SortPanelLoans({finalSort, setSortRegime, userData, category, setCatego
                 <DatalistInput
                     value={category}
                     setValue={setCategory}
-                    placeholder="Ми винні"
+                    placeholder="Дебет"
                     items={[
-                        {id: 'In', value: 'Ми винні'},
-                        {id: 'Out', value: 'Нам винні'},
+                        {id: 'In', value: 'Дебет'},
+                        {id: 'Out', value: 'Кредит'},
                     ]}
                 />
             </div>
+
             <div className='sort__category'>
                 <h4>Статус: </h4>
                 <DatalistInput
                     value={paidOutStatus}
                     setValue={setPaidOutStatus}
-                    placeholder="Ми винні"
+                    placeholder="Дебет"
                     items={[
                         {id: 'True', value: 'Сплачено'},
                         {id: 'False', value: 'Не сплачено'},
@@ -550,7 +551,7 @@ function LoanPage({userData}) {
         };
 
         doc.autoTable({
-            head: [['Дата запису', "Ім'я / компанія", 'Тип позики', 'Сума', 'Дата виплати', 'Статус']],
+            head: [['Дата запису', "Ім'я / компанія", 'Тип депозиту', 'Сума', 'Дата виплати', 'Статус']],
             body: [
               [element.DateOfCreation, element.Name, element.Type, `${element.Value + ' ' + element.Currency}`, element.Date, `${element.PaidOut ? 'Закрита' : 'Відкрита'}`],
             ],
@@ -617,10 +618,10 @@ function LoanPage({userData}) {
 
                         <div className="table_titles">
                             <p className="table_title">Ім'я / компанія</p>
-                            <p className="table_title">Ми винні</p>
-                            <p className="table_title">Нам винні</p>
+                            <p className="table_title">Кредит</p>
+                            <p className="table_title">Дебет</p>
                             <p className="table_title">Дата оплати</p>
-                            <p className="table_title">Панель управління</p>
+                            <p className="table_title">Панель керування</p>
                         </div>
 
                         <div className='table_rows'>
@@ -637,18 +638,18 @@ function LoanPage({userData}) {
 
                                     <div className='item_value table_col'>
                                         {loan.PaidOut ? 
-                                            <p className='break_text value costValue loan_paid_out'>{loan.Type === 'Ми винні' ? loan.Value : ''}</p> :
-                                            <p className='break_text value costValue'>{loan.Type === 'Ми винні' ? loan.Value : ''}</p> 
+                                            <p className='break_text value costValue loan_paid_out'>{loan.Type === 'Кредит' ? loan.Value : ''}</p> :
+                                            <p className='break_text value costValue'>{loan.Type === 'Кредит' ? loan.Value : ''}</p> 
                                         }
-                                        <p className='value_currency'>{loan.Type === 'Ми винні' ? loan.Currency : ''}</p>
+                                        <p className='value_currency'>{loan.Type === 'Кредит' ? loan.Currency : ''}</p>
                                     </div>
 
                                     <div className='item_value table_col'>
                                         {loan.PaidOut ? 
-                                            <p className='break_text value incomeValue loan_paid_out'>{loan.Type === 'Нам винні' ? loan.Value : ''}</p> :
-                                            <p className='break_text value incomeValue'>{loan.Type === 'Нам винні' ? loan.Value : ''}</p>
+                                            <p className='break_text value incomeValue loan_paid_out'>{loan.Type === 'Дебет' ? loan.Value : ''}</p> :
+                                            <p className='break_text value incomeValue'>{loan.Type === 'Дебет' ? loan.Value : ''}</p>
                                         }
-                                        <p className='value_currency'>{loan.Type === 'Нам винні' ? loan.Currency : ''}</p>
+                                        <p className='value_currency'>{loan.Type === 'Дебет' ? loan.Currency : ''}</p>
                                     </div>
 
                                     <div className='item_date table_col'>

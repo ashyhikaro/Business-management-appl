@@ -188,7 +188,7 @@ function CashFlowPage({userData}) {
 
     return (
         <div className="page">
-            <h1 className="title">Рух Коштів</h1>
+            <h1 className="title">Аналітика</h1>
 
             <div className='chart_category__container'>
                 <h2>Вид діаграми:</h2>

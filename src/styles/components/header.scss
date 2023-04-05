@@ -13,7 +13,6 @@
 }
 
 .tittle {
-  display: none;
 
   a {
     color: white;
@@ -73,6 +72,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
     height: 100%;
   }
 
@@ -83,12 +83,6 @@ nav {
 }
 
 @media (max-width: 760px) {
-  li > a {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 600px) {
   nav {
     height: 70px;
     padding: 15px 40px;
@@ -108,8 +102,4 @@ nav {
       margin-left: auto;
     }
   }
-
-  .tittle {
-    display: block;
-  }  
 }

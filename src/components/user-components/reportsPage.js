@@ -290,21 +290,21 @@ function ReportsPage({userData}) {
 
             if (bodyArr.length > 0) {
                 doc.autoTable({
-                    head: [['Дата запису', "Ім'я / компанія", 'Тип позики', 'Сума', 'Дата виплати', 'Статус']],
+                    head: [['Дата запису', "Ім'я / компанія", 'Тип депозиту', 'Сума', 'Дата виплати', 'Статус']],
                     body: bodyArr,
                     headStyles,
                     bodyStyles,
                 })
     
                 doc.autoTable({
-                    head: [['Тип позики', 'Сума', 'Статус']],
+                    head: [['Тип депозиту', 'Сума', 'Статус']],
                     body: sumBodyPaidOut,
                     headStyles,
                     bodyStyles,
                 })
     
                 doc.autoTable({
-                    head: [['Тип позики', 'Сума', 'Статус']],
+                    head: [['Тип депозиту', 'Сума', 'Статус']],
                     body: sumBodyNotPaidOut,
                     headStyles,
                     bodyStyles,
@@ -370,7 +370,7 @@ function ReportsPage({userData}) {
             })
 
             doc.save('Expense_report')
-        } else if (reportType === 'Позики') {
+        } else if (reportType === 'Депозити') {
             summaryArr = [...loansArr]
 
             let bodyArr = []
@@ -384,10 +384,10 @@ function ReportsPage({userData}) {
 
             doc.setFont('CyrillicFont')
             doc.setFontSize(26);
-            doc.text(40, 50, 'Звіт про позики')
+            doc.text(40, 50, 'Звіт про депозити')
 
             doc.autoTable({
-                head: [['Дата запису', "Ім'я / компанія", 'Тип позики', 'Сума', 'Дата виплати', 'Статус']],
+                head: [['Дата запису', "Ім'я / компанія", 'Тип депозиту', 'Сума', 'Дата виплати', 'Статус']],
                 body: bodyArr,
                 startY: 80,
                 headStyles,
@@ -395,14 +395,14 @@ function ReportsPage({userData}) {
             })
 
             doc.autoTable({
-                head: [['Тип позики', 'Сума', 'Статус']],
+                head: [['Тип депозиту', 'Сума', 'Статус']],
                 body: sumBodyPaidOut,
                 headStyles,
                 bodyStyles,
             })
 
             doc.autoTable({
-                head: [['Тип позики', 'Сума', 'Статус']],
+                head: [['Тип депозиту', 'Сума', 'Статус']],
                 body: sumBodyNotPaidOut,
                 headStyles,
                 bodyStyles,
@@ -575,7 +575,7 @@ function ReportsPage({userData}) {
                                     { id: '1', value: 'Загальний' },
                                     { id: '2', value: 'Прибутки' },
                                     { id: '3', value: 'Витрати' },
-                                    { id: '4', value: 'Позики' },
+                                    { id: '4', value: 'Депозити' },
                                 ]}
                             />
                             </Form.Field>
@@ -619,14 +619,14 @@ function ReportsPage({userData}) {
                             </div>
                         </div>
 
-                        <h4 className='reports__title'>Позики</h4>
+                        <h4 className='reports__title'>Депозити</h4>
 
                         <div className='report_finances'>
                             <div className='report_container'>
                                 <div>
                                     <h5 className='report_title'>Закриті:</h5>
                                     {loansArr.length > 0 ? loansArr[0].map((item, index) => {
-                                        return <p className='report_item' key={index}>{item.type !== 'Ми винні' ? 'Отримали' : 'Віддали'}: {item.value} ₴</p>}
+                                        return <p className='report_item' key={index}>{item.type !== 'Кредит' ? 'Отримали' : 'Віддали'}: {item.value} ₴</p>}
                                     ) : null}
                                 </div>
                                 <p className='report_item dif'>Різниця: {(loansArr && loansArr[0] && loansArr[1] && loansArr[0][0] && loansArr[0][1] && loansArr[1][0] && loansArr[1][1]) && (loansArr[0].length > 0 || loansArr[1].length > 0)  ? (loansArr[0][0].value && loansArr[0][1].value) ? loansArr[0][1].value - loansArr[0][0].value : (loansArr[0][0].value && !loansArr[0][1].value) ? loansArr[0][0].value : loansArr[0][1].value : 0} ₴</p>

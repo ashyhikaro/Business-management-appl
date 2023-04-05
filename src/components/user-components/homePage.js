@@ -230,14 +230,14 @@ function MainPage({userData}) {
                         
 
                         <div>
-                            <h2 className='main_finance__title'>Позики компанії</h2>
+                            <h2 className='main_finance__title'>Депозити компанії</h2>
 
                             <div className='money_container'>
-                                <p className='container__title'>Нам винні</p>
+                                <p className='container__title'>Дебет</p>
                                 <p className='incomeValue'>{loansIn} UAH</p>
                             </div>
                             <div className='money_container'>
-                                <p className='container__title'>Ми винні</p>
+                                <p className='container__title'>Кредит</p>
                                 <p className='costValue'>{loansOut} UAH</p>
                             </div>
                         </div>

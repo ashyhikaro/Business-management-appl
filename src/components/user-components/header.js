@@ -17,7 +17,7 @@ function Header({handleLogout}) {
 
   return (
     <nav>
-      <div className='tittle'><NavLink to="/">HikaFinances</NavLink></div>
+      <div className='tittle'><NavLink to="/">FinFlow</NavLink></div>
       <div className='burger_btn' onClick={toggleShowMenu}>
         <img src={burgerImg} className='burger_btn_img'></img>
       </div>
@@ -26,8 +26,8 @@ function Header({handleLogout}) {
         <li><NavLink to="/">Головна</NavLink></li>
         <li><NavLink to="/user-profile">Профіль</NavLink></li>
         <li><NavLink to="/finances">Фінанси</NavLink></li>
-        <li><NavLink to="/loans">Позика</NavLink></li>
-        <li><NavLink to="/cash-flow">Рух коштів</NavLink></li>
+        <li><NavLink to="/loans">Депозити</NavLink></li>
+        <li><NavLink to="/cash-flow">Аналітика</NavLink></li>
         <li><NavLink to="/reports">Статистика</NavLink></li>
         <li onClick={handleLogout}><NavLink to="/">Вихід</NavLink></li>
       </ul>
@@ -36,8 +36,8 @@ function Header({handleLogout}) {
           <li><NavLink to="/">Головна</NavLink></li>
           <li><NavLink to="/user-profile">Профіль</NavLink></li>
           <li><NavLink to="/finances">Фінанси</NavLink></li>
-          <li><NavLink to="/loans">Позика</NavLink></li>
-          <li><NavLink to="/cash-flow">Рух коштів</NavLink></li>
+          <li><NavLink to="/loans">Депозити</NavLink></li>
+          <li><NavLink to="/cash-flow">Аналітика</NavLink></li>
           <li><NavLink to="/reports">Статистика</NavLink></li>
       </ul>
       <ul className='exit_btn'>
