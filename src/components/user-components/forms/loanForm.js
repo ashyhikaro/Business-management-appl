@@ -83,7 +83,9 @@ function LoanForm({userData, openForm, mode, usersNoteId}) {
                     DateOfCreation: `${nowObj.day}-${nowObj.month}-${nowObj.year}`,
                     DateOfDBInput: now,
                     Date: newDBObject.date,
+                    DateMonth: newDBObject.dateMonth,
                     Value: newDBObject.sum,
+                    ValueMonth: newDBObject.sumMonth,
                     Currency: newDBObject.curr,
                     Type: newDBObject.value,
                     Name: newDBObject.name ? newDBObject.name : '',
@@ -96,7 +98,9 @@ function LoanForm({userData, openForm, mode, usersNoteId}) {
                     DateOfCreation: oldNote.DateOfCreation,
                     DateOfDBInput: oldNote.DateOfDBInput,
                     Date: newDBObject.date && newDBObject.date !== 'undefined-undefined-' ? newDBObject.date : oldNote.Date,
+                    DateMonth: newDBObject.dateMonth ? newDBObject.dateMonth : oldNote.dateMonth,
                     Value: newDBObject.sum ? newDBObject.sum : oldNote.Value,
+                    ValueMonth: newDBObject.sumMonth ? newDBObject.sumMonth : oldNote.ValueMonth,
                     Currency: newDBObject.curr ? newDBObject.curr : oldNote.Currency,
                     Type: newDBObject.value ? newDBObject.value : oldNote.Type,
                     Name: newDBObject.name ? newDBObject.name : oldNote.Name,
@@ -108,7 +112,7 @@ function LoanForm({userData, openForm, mode, usersNoteId}) {
 
     useEffect(() => {
         if (formState.isSubmitSuccessful) {
-            reset({ date: '', sum: '', name: '',});
+            reset({ date: '', sum: '', name: '', dateMonth: '', sumMonth: ''});
             setValue('')
             setCurrency('')
         }
@@ -148,7 +152,6 @@ function LoanForm({userData, openForm, mode, usersNoteId}) {
 
                     {mode === 'create' ?
                         <DatalistInput
-                            style={{marginTop: '8px'}}
                             value={value}
                             setValue={setValue}
                             placeholder="Дебет"
@@ -158,7 +161,6 @@ function LoanForm({userData, openForm, mode, usersNoteId}) {
                             ]}
                         /> :
                         <DatalistInput
-                            style={{marginTop: '8px'}}
                             value={value}
                             setValue={setValue}
                             placeholder={oldNote.Type}
@@ -235,7 +237,59 @@ function LoanForm({userData, openForm, mode, usersNoteId}) {
                 </Form.Field>
 
                 <Form.Field>
-                    <label>Дата платежу:</label>
+                    <label>Сума  щомісячного платежу:</label>
+                    {mode === 'create' ? 
+                        <input
+                            type="number"
+                            placeholder='Сума...'
+                            {...register('sumMonth', {
+                                required: 'error value'
+                            })}
+                            min={1}
+                            max={1000000000}
+                        />
+                    :   
+                        <input
+                            type="number"
+                            placeholder={oldNote.ValueMonth}
+                            {...register('sumMonth', {
+                                required: false,
+                            })}
+                            min={1}
+                            max={1000000000}
+                        />
+                    }
+                    {errors.sum && <p className='error_message'>*Заповніть поле</p>}
+                </Form.Field>
+
+                <Form.Field>
+                    <label>Дата щомісячного платежу:</label>
+                    {mode === 'create' ? 
+                        <input  
+                            type="number"
+                            placeholder='Дата...'
+                            {...register('dateMonth', {
+                                required: 'error dateMonth',
+                                max: 31,
+                                min: 1,
+                            })}
+                        />
+                    :
+                        <input  
+                            {...register('date', {
+                                required: false,
+                                max: 31,
+                                min: 1,
+                            })}
+                            placeholder={oldNote.DateMonth}
+                            type="number"
+                        />
+                    }
+                    {errors.date && <p className='error_message'>*Заповніть поле</p>}
+                </Form.Field>
+
+                <Form.Field>
+                    <label>Дата кінцевого платежу:</label>
                     {mode === 'create' ? 
                         <input  
                             type="date"

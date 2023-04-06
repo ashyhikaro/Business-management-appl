@@ -40,111 +40,113 @@
     color: rgb(158, 37, 37);
 }
 
-.finance_main {
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-    width: 100%;
-
-    .finance_table_container {
-        width: 70%;
-
-        .table {
-            width: 100%;
-
-            .table_titles {
-                display: flex;
-                border-bottom: 1px solid rgb(154, 154, 154);
-
-                .table_title {
+.loan_page {
+    .finance_main {
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+        width: 100%;
+    
+        .finance_table_container {
+            width: 75%;
+    
+            .table {
+                width: 100%;
+    
+                .table_titles {
                     display: flex;
-                    align-items: center;
-                    height: 60px;
-                    width: 20%;
-                    font-size: 18px;
-                    color: rgb(104, 104, 104);
-                }
-            }
-
-            .table_rows {
-                .table_row {
-                    display: flex;
-                    align-items: center;
-                    width: 100%;
                     border-bottom: 1px solid rgb(154, 154, 154);
-                    padding: 20px 0 20px 0;
-
-                    .table_col:first-of-type {
-                        text-align: left;
-                    }
-
-                    .table_col {
-                        width: 20%;
-                        text-align: left;
-
-                        .date {
-                            font-size: 18px;
-                        }
-
-                        .date_of_creation {
-                            font-size: 14px;
-                            margin-top: 2px;
-                            color: rgb(104, 104, 104);
-                        }
-
-                        .value {
-                            font-size: 18px;
-                            max-width: 40%;
-                        }
-
-                        .value_currency {
-                            position: absolute;
-                            right: 30%;
-                            top: 10%;
-                            font-size: 14px;
-                        }
-
-                        .name {
-                            max-width: 80%;
-                            font-size:20px;
-                        }
-
-                        .btn {
-                            border-radius: 5px;
-                            width: 100%;
-                            font-size: 14px;
-                            padding: 6px 6px;
-                            border: none;
-                            color: white;
-                        }
-
-                        .btn:hover {
-                            cursor: pointer;
-                            opacity: 0.6;
-                        }
-
-                        .receipt_btn {
-                            background-color: rgb(65, 90, 254);
-                            margin-bottom: 5px;
-                        }
-
-                        .delete_btn {
-                            background-color: rgb(177, 49, 49);
-                        }
-
-                        .edit_btn {
-                            background-color: rgb(91, 169, 81);
-                            margin-bottom: 5px;
-                        }
-                    }
-
-                    .item_value {
-                        position: relative;
-                    }
-
-                    .item_panel {
+    
+                    .table_title {
                         display: flex;
-                        gap: 10px;
+                        align-items: center;
+                        height: 60px;
+                        width: 14%;
+                        font-size: 18px;
+                        color: rgb(104, 104, 104);
+                    }
+                }
+    
+                .table_rows {
+                    .table_row {
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        border-bottom: 1px solid rgb(154, 154, 154);
+                        padding: 20px 0 20px 0;
+    
+                        .table_col:first-of-type {
+                            text-align: left;
+                        }
+    
+                        .table_col {
+                            width: 14%;
+                            text-align: left;
+    
+                            .date {
+                                font-size: 18px;
+                            }
+    
+                            .date_of_creation {
+                                font-size: 14px;
+                                margin-top: 2px;
+                                color: rgb(104, 104, 104);
+                            }
+    
+                            .value {
+                                font-size: 18px;
+                                max-width: 40%;
+                            }
+    
+                            .value_currency {
+                                position: absolute;
+                                right: 30%;
+                                top: 10%;
+                                font-size: 14px;
+                            }
+    
+                            .name {
+                                max-width: 80%;
+                                font-size:20px;
+                            }
+    
+                            .btn {
+                                border-radius: 5px;
+                                width: 100%;
+                                font-size: 14px;
+                                padding: 6px 6px;
+                                border: none;
+                                color: white;
+                            }
+    
+                            .btn:hover {
+                                cursor: pointer;
+                                opacity: 0.6;
+                            }
+    
+                            .receipt_btn {
+                                background-color: rgb(65, 90, 254);
+                                margin-bottom: 5px;
+                            }
+    
+                            .delete_btn {
+                                background-color: rgb(177, 49, 49);
+                            }
+    
+                            .edit_btn {
+                                background-color: rgb(91, 169, 81);
+                                margin-bottom: 5px;
+                            }
+                        }
+    
+                        .item_value {
+                            position: relative;
+                        }
+    
+                        .item_panel {
+                            display: flex;
+                            gap: 10px;
+                        }
                     }
                 }
             }
@@ -152,8 +154,8 @@
     }
 }
 
-.sort_panel {
-    width: 25%;
+.sort_panel1 {
+    width: 22%;
     height: fit-content;
     border-radius: 5px;
     background-color: rgb(213, 213, 213);
@@ -216,6 +218,7 @@
             border-radius: 5px;
             padding: 3px 8px;
             transition: 0.3s;
+            font-size: 14px;
 
             span {
                 font-size: 20px;
