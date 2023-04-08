@@ -14,9 +14,10 @@ a {
 }
 
 #root {
- height: fit-content;
- min-height: 100vh;
- background-color: #efefef;
+  height: fit-content;
+  min-height: 100vh;
+  background-color: #efefef;
+  min-width: 320px;
 
   .page {
     padding: 25px 40px;
