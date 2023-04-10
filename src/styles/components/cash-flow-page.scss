@@ -14,6 +14,11 @@
             gap: 12px;
             margin-bottom: 20px;
 
+            .categories__btns {
+                display: flex;
+                gap: 12px;
+            }
+
             button {
                 cursor: pointer;
                 font-size: 18px;
@@ -117,4 +122,67 @@
 .data_err__message {
     color: rgb(187, 38, 38);
     font-size: 14px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 960px) {
+    .page {
+        .charts__container{
+            display: block;
+
+            .chart__container{
+                width: 100%;
+
+                .chart-container {
+                    width: 50%;
+                    margin: 20px auto 0 auto;
+                }
+
+                .bar_chart__container {
+                    width: 100%;
+                }
+            }
+        }
+
+        .mixedline_chart_finances {
+            width: 100%;
+            margin-top: 20px;
+        }
+    }
+}
+
+@media (max-width: 810px) {
+    .page .chart_category__container .categories {
+        display: block;
+
+        .chart_date {
+            margin-top: 20px;
+
+            .react-datalist-input__container {
+                width: fit-content;
+            }
+        }
+    }
+}
+
+@media (max-width: 760px) {
+    .page {
+        .charts__container{
+            .chart__container{
+                .chart-container {
+                    width: 70%;
+                }
+
+                .bar_chart__container {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 580px) {
+    .page .chart_category__container .categories .categories__btns {
+        flex-direction: column;
+    }
 }

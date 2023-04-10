@@ -205,10 +205,12 @@ function CashFlowPage({userData}) {
             <div className='chart_category__container'>
                 <h2>Вид діаграми:</h2>
                 <div className='categories'>
-                    <button className='line' onClick={() => setDiagramState('line')}>Лінійна</button>
-                    <button className='bar' onClick={() => setDiagramState('bar')}>Стовпчикова</button>
-                    <button className='pie' onClick={() => setDiagramState('pie')}>Секторна</button>
-                    <button className='polar' onClick={() => setDiagramState('polar')}>Мультирівнева</button>
+                    <div className='categories__btns'>
+                        <button className='line' onClick={() => setDiagramState('line')}>Лінійна</button>
+                        <button className='bar' onClick={() => setDiagramState('bar')}>Стовпчикова</button>
+                        <button className='pie' onClick={() => setDiagramState('pie')}>Секторна</button>
+                        <button className='polar' onClick={() => setDiagramState('polar')}>Мультирівнева</button>
+                    </div>
 
                     <div className='chart_date'>
                         <DatalistInput
@@ -250,9 +252,9 @@ function CashFlowPage({userData}) {
                             ]}
                         />
                     </div>
-
-                    {localStorage.getItem('err') ? <p className='data_err__message'>*Немає інформації про даний період</p> : null}
                 </div>
+                {localStorage.getItem('err') ? <p className='data_err__message'>*Немає інформації про даний період</p> : null}
+
             </div>
 
             {diagramState === 'line' ? <button className='btn' onClick={() => setCompare(prev => !prev)}>Порівняти</button> : null}

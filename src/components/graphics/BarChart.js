@@ -89,7 +89,7 @@ function BarChart({title, financeArr, financeType, barType}){
     
 
     return (
-        <div className="chart-container">
+        <div className="bar_chart__container chart-container">
             <h2 style={{ textAlign: "center"}}>{title}</h2>
             <br />
             <Bar
