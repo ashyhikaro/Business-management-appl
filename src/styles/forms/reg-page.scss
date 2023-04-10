@@ -1,38 +1,91 @@
 .registration_page {
     background: url(../../img/bg1.jpg);
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-position: center;
     height: 100vh;
     width: 100vw;
-}
 
-.form_block {
-    form {
-        h1 {
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 26px;
-            color: rgb(80, 80, 80);
+    .form_block {
+        form {
+            width: 40%;
+
+            h1 {
+                text-align: center;
+                margin-bottom: 15px;
+                font-size: 26px;
+                color: rgb(80, 80, 80);
+            }
+    
+            .reg_block {
+                display: flex;
+                justify-content: space-between;
+            
+                .field_block {
+                    width: 48%;
+                
+                    .field {
+                        display: flex;
+                        flex-direction: column;
+                
+                        input {
+                            width: 95%;
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
-.reg_block {
-    display: flex;
-    flex-direction: row;
-    gap: 5%;
+@media (max-width: 1100px) {
+    .registration_page {
+        .form_block {
+            form {
+                width: 50%;
+            }
+        }
+    }
 }
 
-.field_block {
-    width: 300px;
+@media (max-width: 760px) {
+    .registration_page {
+        .form_block {
+            form {
+                width: 60%;
+            }
+        }
+    }
+}
 
-    .field {
-        display: flex;
-        flex-direction: column;
+@media (max-width: 620px) {
+    .registration_page {
+        height: fit-content;
+        padding: 40px 0;
+        .form_block {
+            height: auto;
 
-        input {
-            width: 95%;
+            form {
+                h1 {
+                    font-size: 20px;
+                }
+                
+                .reg_block {
+                    display: block;
+
+                    .field_block {
+                        width: 100%;
+                    }
+                }
+
+                .btns_field {
+                    flex-direction: column;
+
+                    .sign_btn {
+                        width: 100%;
+                    }
+                }
+            }
         }
     }
 }

@@ -25,7 +25,6 @@ function ResetPasswordPage({auth}) {
             <div className='reset_form'>
                 <h3>Введіть електронну адресу:</h3>
                 <input type='text' placeholder='Ваша пошта...'></input>
-                <br/>
                 <button className='back_btn' onClick={() => navigate('/')}>Назад</button>
                 <button className='reset_btn' onClick={() => resetPassword(auth)}>Відновити пароль</button>
             </div>
