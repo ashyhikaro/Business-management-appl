@@ -1,13 +1,17 @@
 import '../../styles/components/cash-flow-page.scss'
 import 'react-datalist-input/dist/styles.css';
+import burgerImg from '../../img/burger_menu.png'
+
 import DatalistInput, { useComboboxControls } from 'react-datalist-input';
-import { useEffect, useState } from 'react';
-import LineChart from '../graphics/LineChart';
-import PieChart from '../graphics/PieChart';
-import BarChart from '../graphics/BarChart';
-import MixedLineChart from '../graphics/MixedLineChart';
+import { useEffect, useState, lazy } from 'react';
+
 import { db } from '../..';
-import PolarAreaChart from '../graphics/PolarAreaChart';
+
+const LineChart = lazy(() => import('../graphics/LineChart'))
+const PieChart = lazy(() => import('../graphics/PieChart'))
+const BarChart = lazy(() => import('../graphics/BarChart'))
+const MixedLineChart = lazy(() => import('../graphics/MixedLineChart'))
+const PolarAreaChart = lazy(() => import('../graphics/PolarAreaChart'))
 
 function CashFlowPage({userData}) {
     const months = ["Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"];
@@ -185,6 +189,14 @@ function CashFlowPage({userData}) {
 
         HelloBiden(prev => !prev)
     }, [yearFinance, monthFinance, diagramState])
+
+    useEffect(() => {
+        if (!document.querySelector('.menu_small_screen').classList.contains('hidden')) {
+            document.querySelector('.menu_small_screen').classList.add('hidden')
+            document.querySelector('.burger_btn_img').src = burgerImg
+        }
+        
+    }, [])
 
     return (
         <div className="page">

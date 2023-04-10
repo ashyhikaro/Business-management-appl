@@ -178,7 +178,7 @@ function SortPanelLoans({
     }
 
     return (
-        <div className='sort_panel1'>
+        <div className='sort_panel_loans'>
             <h2>Сортування</h2>
 
             <div className='sort__date sort_con_flex'>

@@ -154,7 +154,7 @@
     }
 }
 
-.sort_panel1 {
+.sort_panel_loans {
     width: 22%;
     height: fit-content;
     border-radius: 5px;
@@ -278,4 +278,146 @@
 
 .loan_paid_out {
     text-decoration: line-through;
+}
+
+@media (max-width: 1300px) {
+    .loan_page .finance_main .finance_table_container .table .table_rows .table_row .item_panel {
+        display: block;
+    }
+
+    .sort_panel_loans .sort_con_flex .sort_btns button {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 1150px) {
+    .loan_page {
+        .finance_main {
+            .finance__form {
+                width: 100%;
+                margin-top: 0;
+            }
+
+            flex-direction: column;
+
+            .sort_panel_loans {
+                width: 100%;
+
+                .sort_con_flex .sort_btns button {
+                    width: 40%;
+                    font-size: 16px;
+                }
+            }
+
+            .finance_table_container {
+                width: 100%;
+
+                .table_rows, .table_title {
+                    word-break: break-all;
+                }
+
+                .table .table_rows .table_row { 
+                    .item_value {
+                        display: flex;
+                        gap: 10px;
+                
+                        .value_currency {
+                            position: relative;
+                            right: auto;
+                            top: auto;
+                        }
+                    }
+
+                    .item_panel {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+@media (max-width: 700px) {
+    .loan_page {
+        .finance_main {
+            .finance_table_container {
+                .table {
+                    .table_titles {
+                        display: none;
+                    }
+
+                    .table_rows {
+                        .table_row {
+                            display: block;
+
+                            .table_col {
+                                width: 100%;
+                                margin-bottom: 10px;
+                                font-size: 18px;
+
+                                .name, .value {
+                                    max-width: 100%;
+                                }
+
+                                .name::before {
+                                    content: "Ім'я / компанія: ";
+                                }
+
+                                .value::before {
+                                    content: "Місячна сплата: ";
+                                }
+
+                                .incomeValue::before {
+                                    content: "Дебет: ";
+                                    color: black;
+                                }
+
+                                .costValue::before {
+                                    content: "Кредит: ";
+                                    color: black;
+                                }
+
+                                .date::before {
+                                    content: "Дата оплати: ";
+                                }
+
+                                .date_end::before {
+                                    content: "Кінцева оплата: ";
+                                }
+                            
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 430px) {
+    .loan_page {
+        .amount_of_income {
+            display: none;
+        }
+    
+        .finance_main {
+            .table_rows {
+                word-break: break-all;
+            }
+        }
+    
+        .add_finance_btn {
+            margin-right: 10px;
+        }
+    
+        .finance_main .finance_table_container .table .table_titles1 .table_title {
+            word-break: break-all;
+        }
+    
+        .sort_panel_loans div .sort__project_search button {
+            width: 40%;
+        }
+
+    }
 }

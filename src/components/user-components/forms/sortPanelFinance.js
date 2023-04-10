@@ -175,7 +175,7 @@ function SortPanelFinance({
     }
 
     return (
-        <div className='sort_panel'>
+        <div className='sort_panel_finances'>
             <h2>Сортування</h2>
 
             <div className='sort__date sort_con_flex'>

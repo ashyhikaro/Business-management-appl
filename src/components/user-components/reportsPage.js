@@ -2,6 +2,7 @@ import '../../styles/components/reports-page.scss'
 import '../../styles/forms/form.scss';
 import 'react-datalist-input/dist/styles.css';
 import CyrillicFont from '../../fonts/FreeSans.ttf'
+import burgerImg from '../../img/burger_menu.png'
 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
@@ -442,6 +443,14 @@ function ReportsPage({userData}) {
             reset({year: '', quarter: '', month: '',})
         }
     }, [formState])
+
+    useEffect(() => {
+        if (!document.querySelector('.menu_small_screen').classList.contains('hidden')) {
+            document.querySelector('.menu_small_screen').classList.add('hidden')
+            document.querySelector('.burger_btn_img').src = burgerImg
+        }
+        
+    }, [])
 
     return (
         <div className="reports_page page">

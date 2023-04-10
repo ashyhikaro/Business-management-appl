@@ -79,7 +79,7 @@
         .table {
             width: 100%;
 
-            .table_titles1 {
+            .table_titles {
                 display: flex;
                 border-bottom: 1px solid rgb(154, 154, 154);
 
@@ -93,7 +93,7 @@
                 }
             }
 
-            .table_rows1 {
+            .table_rows {
                 .table_row {
                     display: flex;
                     align-items: center;
@@ -104,6 +104,37 @@
 
                     .table_col:first-of-type {
                         text-align: left;
+                    }
+
+                    .item_panel {
+                        .receipt_btn {
+                            background-color: rgb(65, 90, 254);
+                            margin-bottom: 5px;
+                        }
+
+                        .delete_btn {
+                            background-color: rgb(177, 49, 49);
+                        }
+
+                        .edit_btn {
+                            background-color: rgb(91, 169, 81);
+                            margin-bottom: 5px;
+                        }
+
+                        .btn {
+                            border-radius: 5px;
+                            width: 100%;
+                            font-size: 14px;
+                            padding: 6px 6px;
+                            margin-bottom: 5px;
+                            border: none;
+                            color: white;
+                        }
+
+                        .btn:hover {
+                            cursor: pointer;
+                            opacity: 0.6;
+                        }
                     }
 
                     .table_col {
@@ -135,47 +166,11 @@
                         .project {
                             max-width: 80%;
                         }
-
-                        .btn {
-                            border-radius: 5px;
-                            width: 50%;
-                            font-size: 14px;
-                            padding: 6px 6px;
-                            margin-bottom: 5px;
-                            border: none;
-                            color: white;
-                        }
-
-                        .btn:hover {
-                            cursor: pointer;
-                            opacity: 0.6;
-                        }
-
-                        .receipt_btn {
-                            background-color: rgb(65, 90, 254);
-                            margin-bottom: 5px;
-                        }
-
-                        .delete_btn {
-                            background-color: rgb(177, 49, 49);
-                        }
-
-                        .edit_btn {
-                            background-color: rgb(91, 169, 81);
-                            margin-bottom: 5px;
-                        }
+                        
                     }
 
                     .item_value {
                         position: relative;
-                    }
-
-                    .item_panel2 {
-                        display: block !important;
-
-                        .btn {
-                            width: 82% !important;
-                        }
                     }
                 }
             }
@@ -183,7 +178,7 @@
     }
 }
 
-.sort_panel {
+.sort_panel_finances {
     width: 25%;
     height: fit-content;
     border-radius: 5px;
@@ -299,132 +294,141 @@
     display: none;
 }
 
-@media (max-width: 1150px) {
-    .finance_main {
-        flex-direction: column-reverse;
+@media (max-width: 1300px) {
+    .finance_page .finance_main .finance_table_container .table .table_rows .table_row .item_panel {
+        display: block;
+    }
 
-        .sort_panel {
-            width: 100%;
-        }
-
-        .finance_table_container {
-            width: 100%;
-        }
-
-        .sort_con_flex .sort_btns button {
-            width: 20%;
-        }
+    .sort_panel_finances .sort_con_flex .sort_btns button {
+        font-size: 12px;
     }
 }
 
 @media (max-width: 1150px) {
-    .finance_main {
-        .sort_con_flex .sort_btns button {
-            width: 40%;
+    .finance_page {
+        .finance_main {
+            .finance__form {
+                width: 100%;
+            }
+
+            flex-direction: column;
+
+            .sort_panel_finances {
+                width: 100%;
+
+                .sort_con_flex .sort_btns button {
+                    width: 40%;
+                    font-size: 16px;
+                }
+            }
+
+            .finance_table_container {
+                width: 100%;
+
+                .table_rows, .table_title {
+                    word-break: break-all;
+                }
+
+                .table .table_rows .table_row { 
+                    .item_value {
+                        display: flex;
+                        gap: 10px;
+                
+                        .value_currency {
+                            position: relative;
+                            right: auto;
+                            top: auto;
+                        }
+                    }
+
+                    .item_panel {
+                        display: block;
+                    }
+                }
+            }
         }
-
-        .table_rows1 {
-            font-size: 14px;
-            word-break: break-all;
-        }
-    }
-
-    .finance_main .finance_table_container .table .table_rows1 .table_row .table_col .value {
-        font-size: 14px;
-    }
-
-    .finance_main .finance_table_container .table .table_rows1 .table_row .table_col .date {
-        font-size: 14px;
-    }
-
-    .finance_main .finance_table_container .table .table_rows1 .table_row .table_col .date_of_creation {
-        font-size: 12px;
     }
     
-    .finance_page .finance_header .header_amounts {
-        font-size: 16px;
+}
+
+@media (max-width: 700px) {
+    .finance_page {
+        .finance_main {
+            .finance_table_container {
+                .table {
+                    .table_titles {
+                        display: none;
+                    }
+
+                    .table_rows {
+                        .table_row {
+                            display: block;
+
+                            .table_col {
+                                width: 100%;
+                                margin-bottom: 10px;
+                                font-size: 18px;
+
+                                .project::before {
+                                    content: "Проєкт: ";
+                                }
+
+                                .type::before {
+                                    content: "Категорія: ";
+                                }
+
+                                .incomeValue::before {
+                                    content: "Прибуток: ";
+                                    color: black;
+                                }
+
+                                .costValue::before {
+                                    content: "Витрата: ";
+                                    color: black;
+                                }
+
+                                .date::before {
+                                    content: "Дата транзакції: ";
+                                }
+                            
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+}
 
-    .add_finance_btn {
-        margin-right: 12px;
-    }
+@media (max-width: 550px) {
+    .finance_page .finance_header {
+        display: block;
 
-    .finance_main .finance_table_container .table .table_rows1 .table_row .table_col .btn {
-        font-size: 12px;
-    }
-
-    .finance_main .finance_table_container .table .table_titles1 .table_title {
-        font-size: 16px;
-        word-break: break-all;
-    }
-
-    .finance_main .finance_table_container .table .table_rows1 .table_row .item_value {
-        display: flex;
-        flex-direction: column;
-
-        .value_currency {
-            position: relative;
-            right: auto;
-            top: auto;
+        .header_amounts {
+            margin-top: 20px;
         }
     }
 }
 
 @media (max-width: 430px) {
-    .amount_of_income {
-        display: none;
-    }
-
-    .finance_main {
-        .table_rows1 {
-            font-size: 10px;
+    .finance_page {
+        .finance_main {
+            .table_rows {
+                word-break: break-all;
+            }
+        }
+    
+        .add_finance_btn {
+            margin-right: 10px;
+        }
+    
+        .finance_main .finance_table_container .table .table_titles1 .table_title {
             word-break: break-all;
         }
-    }
-
-    .finance_main .finance_table_container .table .table_rows1 .table_row .table_col .value {
-        font-size: 10px;
-    }
-
-    .finance_main .finance_table_container .table .table_rows1 .table_row .table_col .date {
-        font-size: 10px;
-    }
-
-    .finance_main .finance_table_container .table .table_rows1 .table_row .table_col .date_of_creation {
-        font-size: 10px;
-    }
     
-    .finance_page .finance_header .header_amounts {
-        font-size: 14px;
-    }
+        .sort_panel_finances div .sort__project_search button {
+            width: 40%;
+        }
 
-    .add_finance_btn {
-        margin-right: 10px;
     }
-
-    .finance_main .finance_table_container .table .table_rows1 .table_row .table_col .btn {
-        font-size: 10px;
-    }
-
-    .finance_main .finance_table_container .table .table_titles1 .table_title {
-        font-size: 14px;
-        word-break: break-all;
-    }
-
-    .finance_main .sort_con_flex .sort_btns button {
-        font-size: 12px;
-    }
-
-    .sort_panel div .sort__project_search button {
-        width: 40%;
-    }
-
-    .finance_main .finance_table_container .table .table_rows1 .table_row .table_col .value_currency {
-        font-size: 10px;
-    }
-    
-}
-
-@media (max-width: 360px) {
-   
 }

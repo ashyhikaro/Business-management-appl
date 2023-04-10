@@ -1,10 +1,21 @@
 import '../../styles/components/user-page.scss'
 import UserSettingForm from "./forms/userSettingsForm";
+import burgerImg from '../../img/burger_menu.png'
+
+import { useEffect } from 'react';
 
 function UserProfile({userData, setUserSettings}) {
     function openSttingForm() {
         document.querySelector('.form_block').classList.toggle('non_active')
     }
+
+    useEffect(() => {
+        if (!document.querySelector('.menu_small_screen').classList.contains('hidden')) {
+            document.querySelector('.menu_small_screen').classList.add('hidden')
+            document.querySelector('.burger_btn_img').src = burgerImg
+        }
+        
+    }, [])
 
     return (
         <div className="profile_page page">

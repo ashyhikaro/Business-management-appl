@@ -1,5 +1,6 @@
 import '../../styles/components/loan-page.scss'
 import '../../styles/pagination.scss'
+import burgerImg from '../../img/burger_menu.png'
 import CyrillicFont from '../../fonts/FreeSans.ttf'
 
 import jsPDF from 'jspdf';
@@ -30,7 +31,7 @@ function LoanPage({userData}) {
     let currentItems = loans ? loans.slice(itemOffset, endOffset) : null
 
     function openForm(backTriger) {
-        document.querySelector('.sort_panel').classList.toggle('sort_panel_non_active')
+        document.querySelector('.sort_panel_loans').classList.toggle('sort_panel_non_active')
 
         if (mode === 'edit' && !document.querySelector('form').classList.contains('form_hiden')) {
             setMode('create')
@@ -266,6 +267,14 @@ function LoanPage({userData}) {
         setLoans(sortedArr)
     }
 
+    useEffect(() => {
+        if (!document.querySelector('.menu_small_screen').classList.contains('hidden')) {
+            document.querySelector('.menu_small_screen').classList.add('hidden')
+            document.querySelector('.burger_btn_img').src = burgerImg
+        }
+        
+    }, [])
+
     const generatePDF = (target) => {
         const id = target.id
         const itemId = target.getAttribute('itemID')
@@ -304,9 +313,9 @@ function LoanPage({userData}) {
         };
 
         doc.autoTable({
-            head: [['Дата запису', "Ім'я / компанія", 'Тип депозиту', 'Сума', 'Дата виплати', 'Статус']],
+            head: [['Дата запису', "Ім'я / компанія", 'Тип депозиту', 'Сума', 'Місячна оплата', 'Дата оплати', 'Кінцева виплата', 'Статус']],
             body: [
-              [element.DateOfCreation, element.Name, element.Type, `${element.Value + ' ' + element.Currency}`, element.Date, `${element.PaidOut ? 'Закрита' : 'Відкрита'}`],
+              [element.DateOfCreation, element.Name, element.Type, `${element.Value + ' ' + element.Currency}`, element.ValueMonth, element.DateMonth, element.Date, `${element.PaidOut ? 'Закрита' : 'Відкрита'}`],
             ],
             startY: 80,
             headStyles,
@@ -393,22 +402,22 @@ function LoanPage({userData}) {
 
                                     <div className='item_value table_col'>
                                         {loan.PaidOut ? 
-                                            <p className='break_text value costValue loan_paid_out'>{loan.Type === 'Кредит' ? loan.Value : ''}</p> :
-                                            <p className='break_text value costValue'>{loan.Type === 'Кредит' ? loan.Value : ''}</p> 
+                                            <p className='break_text value costValue loan_paid_out'>{loan.Type === 'Кредит' ? loan.Value : '0'}</p> :
+                                            <p className='break_text value costValue'>{loan.Type === 'Кредит' ? loan.Value : '0'}</p> 
                                         }
                                         <p className='value_currency'>{loan.Type === 'Кредит' ? loan.Currency : ''}</p>
                                     </div>
 
                                     <div className='item_value table_col'>
                                         {loan.PaidOut ? 
-                                            <p className='break_text value incomeValue loan_paid_out'>{loan.Type === 'Дебет' ? loan.Value : ''}</p> :
-                                            <p className='break_text value incomeValue'>{loan.Type === 'Дебет' ? loan.Value : ''}</p>
+                                            <p className='break_text value incomeValue loan_paid_out'>{loan.Type === 'Дебет' ? loan.Value : '0'}</p> :
+                                            <p className='break_text value incomeValue'>{loan.Type === 'Дебет' ? loan.Value : '0'}</p>
                                         }
                                         <p className='value_currency'>{loan.Type === 'Дебет' ? loan.Currency : ''}</p>
                                     </div>
 
                                     <div className='item_value table_col'>
-                                        <p className='break_text value'>{loan.ValueMonth}</p>
+                                        {loan.PaidOut ? <p className='break_text value loan_paid_out'>{loan.ValueMonth}</p> : <p className='break_text value'>{loan.ValueMonth}</p>}
                                     </div>
 
                                     <div className='item_date table_col'>
@@ -416,7 +425,7 @@ function LoanPage({userData}) {
                                     </div> 
 
                                     <div className='item_date table_col'>
-                                        {loan.PaidOut ? <p className='date loan_paid_out'>{loan.Date}</p> : <p className='date'>{loan.Date}</p>}
+                                        {loan.PaidOut ? <p className='date date_end loan_paid_out'>{loan.Date}</p> : <p className='date date_end'>{loan.Date}</p>}
                                     </div> 
 
                                     <div className='item_panel table_col'>

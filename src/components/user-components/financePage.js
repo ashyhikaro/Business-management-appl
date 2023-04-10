@@ -1,9 +1,11 @@
 import '../../styles/components/finance-page.scss'
 import '../../styles/pagination.scss'
 import CyrillicFont from '../../fonts/FreeSans.ttf'
+import burgerImg from '../../img/burger_menu.png'
 
 import { useEffect, useState, lazy } from "react";
 import ReactPaginate from 'react-paginate';
+
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
 
@@ -86,14 +88,14 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
 
             <div className='finance_table_container'>
                 <div className='table'>
-                    <div className="table_titles1">
+                    <div className="table_titles">
                         <p className="table_title">Дата</p>
                         <p className="table_title">Сума</p>
                         <p className="table_title">Категорія</p>
                         <p className="table_title">Проєкт</p>
                         <p className="table_title">Панель керування</p>
                     </div>
-                    <div className='table_rows1'>
+                    <div className='table_rows'>
                         {currentItems.map((income, index) => 
                             <div className="table_row" key={index}>
 
@@ -120,7 +122,7 @@ function Items({currentItems, regime, userData, openForm, handlePageClick, pageC
                                     <p className='break_text project'>{income.Project}</p>
                                 </div>
 
-                                <div className='item_panel item_panel2 table_col'>
+                                <div className='item_panel table_col'>
                                     <button 
                                         className='receipt_btn btn'
                                         onClick={(e)=>generatePDF(e.target)} 
@@ -328,17 +330,17 @@ function FinancePage({userData, amountOfIncome, setAmountOfIncome, amountOfExpen
     }
 
     function openForm(backTriger) {
-        document.querySelector('.sort_panel').classList.toggle('sort_panel_non_active')
+        document.querySelector('.sort_panel_finances').classList.toggle('sort_panel_non_active')
 
         if (mode === 'edit' && !document.querySelector('form').classList.contains('form_hiden')) {
             setMode('create')
             document.querySelector('form').classList.add('form_hiden')
-            document.querySelector('.sort_panel').classList.add('sort_panel_non_active')
+            document.querySelector('.sort_panel_finances').classList.add('sort_panel_non_active')
         }
 
         if (backTriger === 'back') {
             document.querySelector('form').classList.add('form_hiden')
-            document.querySelector('.sort_panel').classList.remove('sort_panel_non_active')
+            document.querySelector('.sort_panel_finances').classList.remove('sort_panel_non_active')
         } else {
             document.querySelector('form').classList.toggle('form_hiden')
         }
@@ -517,6 +519,14 @@ function FinancePage({userData, amountOfIncome, setAmountOfIncome, amountOfExpen
 
         regime === 'income' ? setIncomes(sortedArr) : setCosts(sortedArr)
     }
+
+    useEffect(() => {
+        if (!document.querySelector('.menu_small_screen').classList.contains('hidden')) {
+            document.querySelector('.menu_small_screen').classList.add('hidden')
+            document.querySelector('.burger_btn_img').src = burgerImg
+        }
+        
+    }, [])
 
     return (
         <div className="finance_page page">

@@ -1,4 +1,5 @@
 import '../../styles/components/home-page.scss'
+import burgerImg from '../../img/burger_menu.png'
 
 import LineChart from "../graphics/LineChart";
 import { useState, useEffect } from "react";
@@ -139,6 +140,14 @@ function MainPage({userData}) {
                 }
             }, 0))
         })
+    }, [])
+
+    useEffect(() => {
+        if (!document.querySelector('.menu_small_screen').classList.contains('hidden')) {
+            document.querySelector('.menu_small_screen').classList.add('hidden')
+            document.querySelector('.burger_btn_img').src = burgerImg
+        }
+        
     }, [])
 
     useEffect(() => {
