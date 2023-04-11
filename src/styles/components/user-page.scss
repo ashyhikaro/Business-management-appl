@@ -7,6 +7,7 @@
     }
 
     .user__info_container {
+        width: 100%;
         display: flex;
         justify-content: center;
         gap: 30px;
@@ -14,7 +15,7 @@
         .user_info {
             display: flex;
             flex-direction: column;
-            max-width: 25%;
+            width: 25%;
             min-width: 350px;
             gap: 20px;
 
@@ -34,7 +35,7 @@
         }
 
         .form_block {
-            width: fit-content;
+            width: 25%;;
             height: fit-content;
 
             form {
@@ -43,6 +44,7 @@
                 text-align: left;
                 background-color: rgb(213, 213, 213);
                 box-shadow: none;
+                width: 100%;
 
                 .btns_field {
                     padding-right: 0;
@@ -66,10 +68,23 @@
     }
 }
 
+@media (max-width: 1100px) {
+    .profile_page {
+        .user__info_container {
+            .form_block {
+                width: 40%;
+            }
+        }
+    }
+}
+
 @media (max-width: 830px) {
     .user__info_container {
         flex-direction: column;
         align-items: center;
+    }
+    .form_block form .btns_field .sign_btn, .form_block form .btns_field .submit_btn, .form_block form .btns_field .cancel_btn {
+        width: 100% !important;
     }
 }
 

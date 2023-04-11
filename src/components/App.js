@@ -1,7 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useEffect, useState, lazy, Suspense, startTransition } from 'react';
-import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
 import { db } from '../index';

@@ -1,11 +1,15 @@
 import '../../styles/components/home-page.scss'
 import burgerImg from '../../img/burger_menu.png'
 
-import LineChart from "../graphics/LineChart";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy } from "react";
 
 import { db } from '../../index';
-import PieChart from '../graphics/PieChart';
+
+// import PieChart from '../graphics/PieChart';
+// import LineChart from "../graphics/LineChart";
+
+const LineChart = lazy(() => import('../graphics/LineChart'))
+const PieChart = lazy(() => import('../graphics/PieChart'))
 
 function MainPage({userData}) {
     const today = new Date() 
