@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Business-management-appl/static/css/main.7174f30d.css",
-    "main.js": "/Business-management-appl/static/js/main.092af992.js",
+    "main.js": "/Business-management-appl/static/js/main.7da7c353.js",
     "static/css/293.be52e30c.chunk.css": "/Business-management-appl/static/css/293.be52e30c.chunk.css",
     "static/js/293.f4db8d4f.chunk.js": "/Business-management-appl/static/js/293.f4db8d4f.chunk.js",
     "static/css/915.d40f07b7.chunk.css": "/Business-management-appl/static/css/915.d40f07b7.chunk.css",
@@ -18,8 +18,8 @@
     "static/js/51.4248c765.chunk.js": "/Business-management-appl/static/js/51.4248c765.chunk.js",
     "static/css/171.073e5970.chunk.css": "/Business-management-appl/static/css/171.073e5970.chunk.css",
     "static/js/171.32ff7c0c.chunk.js": "/Business-management-appl/static/js/171.32ff7c0c.chunk.js",
-    "static/css/420.3d7bd300.chunk.css": "/Business-management-appl/static/css/420.3d7bd300.chunk.css",
-    "static/js/420.305e99e1.chunk.js": "/Business-management-appl/static/js/420.305e99e1.chunk.js",
+    "static/css/420.a846f344.chunk.css": "/Business-management-appl/static/css/420.a846f344.chunk.css",
+    "static/js/420.5a22ba51.chunk.js": "/Business-management-appl/static/js/420.5a22ba51.chunk.js",
     "static/css/449.403e2428.chunk.css": "/Business-management-appl/static/css/449.403e2428.chunk.css",
     "static/js/449.6e29ce8c.chunk.js": "/Business-management-appl/static/js/449.6e29ce8c.chunk.js",
     "static/css/577.4f1da2e9.chunk.css": "/Business-management-appl/static/css/577.4f1da2e9.chunk.css",
@@ -37,7 +37,7 @@
     "static/js/608.6313f174.chunk.js": "/Business-management-appl/static/js/608.6313f174.chunk.js",
     "static/css/250.6d66ad72.chunk.css": "/Business-management-appl/static/css/250.6d66ad72.chunk.css",
     "static/js/250.0f139fa6.chunk.js": "/Business-management-appl/static/js/250.0f139fa6.chunk.js",
-    "static/js/258.beb1274e.chunk.js": "/Business-management-appl/static/js/258.beb1274e.chunk.js",
+    "static/js/258.36614ea6.chunk.js": "/Business-management-appl/static/js/258.36614ea6.chunk.js",
     "static/js/769.8dd7e9a8.chunk.js": "/Business-management-appl/static/js/769.8dd7e9a8.chunk.js",
     "static/js/794.dc607915.chunk.js": "/Business-management-appl/static/js/794.dc607915.chunk.js",
     "static/js/549.878c3a53.chunk.js": "/Business-management-appl/static/js/549.878c3a53.chunk.js",
@@ -48,7 +48,7 @@
     "static/media/FreeSans.ttf": "/Business-management-appl/static/media/FreeSans.028215fb03f453e38eed.ttf",
     "index.html": "/Business-management-appl/index.html",
     "main.7174f30d.css.map": "/Business-management-appl/static/css/main.7174f30d.css.map",
-    "main.092af992.js.map": "/Business-management-appl/static/js/main.092af992.js.map",
+    "main.7da7c353.js.map": "/Business-management-appl/static/js/main.7da7c353.js.map",
     "293.be52e30c.chunk.css.map": "/Business-management-appl/static/css/293.be52e30c.chunk.css.map",
     "293.f4db8d4f.chunk.js.map": "/Business-management-appl/static/js/293.f4db8d4f.chunk.js.map",
     "915.d40f07b7.chunk.css.map": "/Business-management-appl/static/css/915.d40f07b7.chunk.css.map",
@@ -65,8 +65,8 @@
     "51.4248c765.chunk.js.map": "/Business-management-appl/static/js/51.4248c765.chunk.js.map",
     "171.073e5970.chunk.css.map": "/Business-management-appl/static/css/171.073e5970.chunk.css.map",
     "171.32ff7c0c.chunk.js.map": "/Business-management-appl/static/js/171.32ff7c0c.chunk.js.map",
-    "420.3d7bd300.chunk.css.map": "/Business-management-appl/static/css/420.3d7bd300.chunk.css.map",
-    "420.305e99e1.chunk.js.map": "/Business-management-appl/static/js/420.305e99e1.chunk.js.map",
+    "420.a846f344.chunk.css.map": "/Business-management-appl/static/css/420.a846f344.chunk.css.map",
+    "420.5a22ba51.chunk.js.map": "/Business-management-appl/static/js/420.5a22ba51.chunk.js.map",
     "449.403e2428.chunk.css.map": "/Business-management-appl/static/css/449.403e2428.chunk.css.map",
     "449.6e29ce8c.chunk.js.map": "/Business-management-appl/static/js/449.6e29ce8c.chunk.js.map",
     "577.4f1da2e9.chunk.css.map": "/Business-management-appl/static/css/577.4f1da2e9.chunk.css.map",
@@ -84,7 +84,7 @@
     "608.6313f174.chunk.js.map": "/Business-management-appl/static/js/608.6313f174.chunk.js.map",
     "250.6d66ad72.chunk.css.map": "/Business-management-appl/static/css/250.6d66ad72.chunk.css.map",
     "250.0f139fa6.chunk.js.map": "/Business-management-appl/static/js/250.0f139fa6.chunk.js.map",
-    "258.beb1274e.chunk.js.map": "/Business-management-appl/static/js/258.beb1274e.chunk.js.map",
+    "258.36614ea6.chunk.js.map": "/Business-management-appl/static/js/258.36614ea6.chunk.js.map",
     "769.8dd7e9a8.chunk.js.map": "/Business-management-appl/static/js/769.8dd7e9a8.chunk.js.map",
     "794.dc607915.chunk.js.map": "/Business-management-appl/static/js/794.dc607915.chunk.js.map",
     "549.878c3a53.chunk.js.map": "/Business-management-appl/static/js/549.878c3a53.chunk.js.map",
@@ -94,6 +94,6 @@
   },
   "entrypoints": [
     "static/css/main.7174f30d.css",
-    "static/js/main.092af992.js"
+    "static/js/main.7da7c353.js"
   ]
 }
