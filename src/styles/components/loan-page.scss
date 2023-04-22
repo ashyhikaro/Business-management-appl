@@ -44,6 +44,7 @@
     .finance_main {
         display: flex;
         justify-content: space-between;
+        gap: 20px;
         text-align: center;
         width: 100%;
     
@@ -67,7 +68,7 @@
                     }
                 }
     
-                .table_rows {
+                .table_rows_loan {
                     .table_row {
                         display: flex;
                         align-items: center;
@@ -281,16 +282,14 @@
 }
 
 @media (max-width: 1300px) {
-    .loan_page .finance_main .finance_table_container .table .table_rows .table_row .item_panel {
+    .loan_page .finance_main .finance_table_container .table .table_rows_loan .table_row .item_panel {
         display: block;
     }
 
     .sort_panel_loans .sort_con_flex .sort_btns button {
         font-size: 12px;
     }
-}
 
-@media (max-width: 1150px) {
     .loan_page {
         .finance_main {
             .finance__form {
@@ -316,7 +315,7 @@
                     word-break: break-all;
                 }
 
-                .table .table_rows .table_row { 
+                .table .table_rows_loan .table_row { 
                     .item_value {
                         display: flex;
                         gap: 10px;
@@ -335,7 +334,6 @@
             }
         }
     }
-    
 }
 
 @media (max-width: 700px) {
@@ -347,7 +345,7 @@
                         display: none;
                     }
 
-                    .table_rows {
+                    .table_rows_loan {
                         .table_row {
                             display: block;
 
@@ -402,7 +400,7 @@
         }
     
         .finance_main {
-            .table_rows {
+            .table_rows_loan {
                 word-break: break-all;
             }
         }

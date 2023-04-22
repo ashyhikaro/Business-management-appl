@@ -297,7 +297,7 @@ function LoanPage({userData}) {
 
         doc.setFont('CyrillicFont')
         doc.setFontSize(26);
-        doc.text(40, 50, 'Звіт про позику')
+        doc.text(40, 50, 'Звіт про депозит')
 
         const tableFont = 'CyrillicFont';
         const tableFontSize = 14;
@@ -388,7 +388,7 @@ function LoanPage({userData}) {
                             <p className="table_title">Керування</p>
                         </div>
 
-                        <div className='table_rows'>
+                        <div className='table_rows_loan'>
                             {currentItems.map((loan, index) => 
                                 <div className="table_row" key={index}>
 

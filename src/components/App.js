@@ -192,7 +192,7 @@ function AppLogin() {
   return (
     <>
       {localStorage.getItem('user') || userData ? <Header handleLogout={handleLogout}/> : null}
-      <Suspense fallback={<h1 className='loading_title'>Loading...</h1>}>
+      <Suspense fallback={<h1 className='loading_title'>Завантаження...</h1>}>
         <Routes>
             <>
               <Route path="/registration" element={

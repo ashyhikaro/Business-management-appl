@@ -215,7 +215,7 @@ function SortPanelLoans({
             </div>
 
             <div className='sort__category'>
-                <h4>Вид позики: </h4>
+                <h4>Вид депозиту: </h4>
                 <DatalistInput
                     value={category}
                     setValue={setCategory}
