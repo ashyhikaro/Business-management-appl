@@ -18,4 +18,4 @@ The project utilizes the following technologies:
 - Sass
 
 ## The future of the application
-It is planned to rewrite the application using Typescript for code typing and Redax Toolkit and RTK Query to create a better system of authorization, receiving and recording data in the database.
+It's planned to rewrite the application using Typescript for code typing and Redux Toolkit and RTK Query to create a better system of authorization, receiving and recording data in the database.
