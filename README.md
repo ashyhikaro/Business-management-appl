@@ -1,4 +1,4 @@
-# Business-management-application
+# Business Management Aplication
 This repository contains a web application developed in React that serves as a financial assistant for tracking transactions, debits, and credits. The application provides features to manage financial records and generate PDF documents, charts, and diagrams based on the data. It also includes user registration, authentication, password recovery, and Google account authentication functionalities. The project utilizes various technologies such as React, jsPDF, Chart.js and Firebase.
 
 ## Features
